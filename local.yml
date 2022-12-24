@@ -20,12 +20,14 @@
       changed_when: False
       when: ansible_distribution == "Archlinux"
     
-    # update cache for Debian and ubuntu....
-    - name: pre-run | update package cache (Debian, ubuntu,...)
+    # update cache for Debian and derivatives....
+    # For getting system info with ansible,
+    # $ ansible localhost -m gather_facts
+    - name: pre-run | update package cache (Debian, Pop, Ubuntu,...)
       tags: always
       apt: update_cache=yes
       changed_when: False
-      when: ansible_distribution in ["Ubuntu", "Debian"]
+      when: ansible_distribution in ["Pop!_OS", "Ubuntu", "Debian"]
 
 # all machine will have the "base" role and
 # will execute the tasks related to this role
@@ -44,14 +46,15 @@
 
 
   tasks:
-    - name: Install htop
-      package:
+    - name: Install packages
+      apt:
         name: 
           - python3-psutil
           - aptitude
           - htop
           - tmux
           - vim
+      when: ansible_distribution in ["Pop!_OS", "Ubuntu", "Debian"]
 
     - name: Copy wallpaper file
       copy:
