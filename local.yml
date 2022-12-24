@@ -56,12 +56,14 @@
           - vim
       when: ansible_distribution in ["Pop!_OS", "Ubuntu", "Debian"]
 
-    - name: Copy wallpaper file
+    - name: Copy wallpaper files
       copy:
-        src: files/pantherflat.jpg
-        dest: /usr/share/backgrounds/ansible-wallpaper.jpg
+        src: "{{ item }}"
+        dest: /usr/share/backgrounds/
         owner: root
         group: root
+      with_fileglob:
+        - files/*
 
     # set wallpaper for Gnome on Pop_OS!
     # Use dconf-cli for dumping dconf value
@@ -69,14 +71,23 @@
     - name: Set wallpaper for Pop-COSMIC
       become_user: "{{ lookup('env', 'USER') }}"  
       dconf: 
+        key: "/org/gnome/desktop/background/picture-uri"
+        value: "'file:///usr/share/backgrounds/ironflat.jpg'"
+      when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
+
+    - name: Set wallpaper for Pop-COSMIC dark mode
+      become_user: "{{ lookup('env', 'USER') }}"  
+      dconf: 
         key: "/org/gnome/desktop/background/picture-uri-dark"
-        value: "'file:///usr/share/backgrounds/ansible-wallpaper.jpg'"
+        value: "'file:///usr/share/backgrounds/pantherflat.jpg'"
+      when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
 
     - name: Set wallpaper position
       become_user: "{{ lookup('env', 'USER') }}"  
       dconf: 
         key: "/org/gnome/desktop/background/picture-options"
         value: "'zoom'"
+      when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
 
     # TODO: install dotfiles
     - name: Set bash config
