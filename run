@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+sudo apt-get update -y
+sudo apt install software-properties-common
+sudo apt-add-repository --yes --update ppa:ansible/ansible
+sudo apt install ansible
+
+## pull ansible
+# sudo ansible-pull -U https://github.com/DevSallSa/ansible.git
+#
+# sudo ansible-pull --vault-pass-file "$HOME"/.vault-key -U https://github.com/DevSallSa/ansible.git
