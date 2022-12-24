@@ -29,11 +29,11 @@
 
 # all machine will have the "base" role and
 # will execute the tasks related to this role
-- hosts: all
-  tags: base
-  become: true
-  roles:
-    - base
+# - hosts: all
+#   tags: base
+#   become: true
+#   roles:
+#     - base
 
 # if the machine belong to the "server" roles
 # - hosts: server
