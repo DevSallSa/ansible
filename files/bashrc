@@ -3,6 +3,7 @@
 # for examples
 
 # Added via Ansible
+# using USER env variable
 
 # If not running interactively, don't do anything
 case $- in

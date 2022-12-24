@@ -79,6 +79,7 @@
     - name: Set bash config
       copy:
         src: files/bashrc
-        dest: /home/usagi/.bashrc
-        owner: usagi
-        group: usagi
+        dest: "{{ lookup('env', 'HOME') }}/.bashrc"
+        owner: "{{ lookup('env', 'USER') }}"
+        group: "{{ lookup('env', 'USER') }}"
+
