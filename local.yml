@@ -1,0 +1,49 @@
+---
+- hosts: localhost
+  # In case of running specific tasks
+  tags: always
+
+  # tell ansible to not use ssh
+  connection: local
+  
+  # use root profile to perform tasks
+  become: true
+
+  # Tasks to perform first
+  # tasks to complete before running roles
+  pre_tasks:
+    
+    # update cache for arch linux
+    - name: pre-run | update package cache (arch)
+      tags: always
+      pacman: update_cache=yes
+      changed_when: False
+      when: ansible_distribution == "Archlinux"
+    
+    # update cache for Debian and ubuntu....
+    - name: pre-run | update package cache (arch)
+      tags: always
+      apt: update_cache=yes
+      changed_when: False
+      when: ansible_distribution in ["Ubuntu", "Debian"]
+
+# all machine will have the "base" role and
+# will execute the tasks related to this role
+- hosts: all
+  tags: base
+  become: true
+  roles:
+    - base
+
+# if the machine belong to the "server" roles
+# - hosts: server
+#   tags: server
+#   become: true
+#   roles:
+#     - server
+
+
+  tasks:
+    - name: install htop
+      package:
+        name: htop
