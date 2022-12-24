@@ -21,7 +21,7 @@
       when: ansible_distribution == "Archlinux"
     
     # update cache for Debian and ubuntu....
-    - name: pre-run | update package cache (arch)
+    - name: pre-run | update package cache (Debian, ubuntu,...)
       tags: always
       apt: update_cache=yes
       changed_when: False
@@ -44,6 +44,10 @@
 
 
   tasks:
-    - name: install htop
+    - name: Install htop
       package:
-        name: htop
+        name: 
+          - aptitude
+          - htop
+          - tmux
+          - vim
