@@ -47,7 +47,28 @@
     - name: Install htop
       package:
         name: 
+          - python3-psutil
           - aptitude
           - htop
           - tmux
           - vim
+
+    - name: Copy wallpaper file
+      copy:
+        src: files/pantherflat.jpg
+        dest: /usr/share/backgrounds/ansible-wallpaper.jpg
+        owner: root
+        group: root
+
+    # set wallpaper for gnome
+    - name: Set wallpaper for gnome
+      become_user: usagi
+      dconf: 
+        key: "/org/gnome/desktop/background/picture-uri"
+        value: "'file:///usr/share/backgrounds/ansible-wallpaper.jpg'"
+
+    - name: Set wallpaper position
+      become_user: usagi
+      dconf: 
+        key: "/org/gnome/desktop/background/picture-options"
+        value: "'zoom'"
