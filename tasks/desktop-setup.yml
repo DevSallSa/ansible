@@ -46,34 +46,38 @@
   tags: *desktop
   when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
 
-# Set Gnome custom keybindings
-    # TODO: mapping brave
-    #- name: Set Kitty terminal shortcut name
-    #  dconf:
-    #    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/name"
-    #    value: "'Gnome Terminal'"
-    #  tags: *desktop
-    #  when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
-    #
-    #- name: Set command for Kitty terminal shortcut
-    #  dconf:
-    #    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/command"
-    #    value: "'gnome-terminal'"
-    #  tags: *desktop
-    #  when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
-    #
-    #- name: Map shortcut for Kitty terminal
-    #  dconf:
-    #    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/binding"
-    #    value: "'<Super><Shift>t'"
-    #  tags: *desktop
-    #  when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
-    #
-    #    
-    #- name: Enable custom keybindings
-    #  dconf:
-    #    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings"
-    #    value: "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
-    #  tags: *desktop
-    #  when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
+
+
+    ###########################
+    # Gnome custom keybinding #
+    ###########################
+
+- name: Set brave browser shortcut name
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/name"
+    value: "'Launch brave browser'"
+  tags: *desktop
+  when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
+
+- name: Set command for brave browser shortcut
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/command"
+    value: "'brave-browser-stable'"
+  tags: *desktop
+  when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
+
+- name: Bind key for brave browser
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/binding"
+    value: "'<Super><Shift>b'"
+  tags: *desktop
+  when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
+
+    
+- name: Enable custom keybindings
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings"
+    value: "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
+  tags: *desktop
+  when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
 ...

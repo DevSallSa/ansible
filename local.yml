@@ -42,7 +42,7 @@
       include_tasks: tasks/core-setup.yml
       tags: core
 
-    - name: "include_tasks => ZSH"
+    - name: "include_tasks => zsh"
       include_tasks: tasks/zsh-setup.yml
       tags: zsh
 
@@ -50,13 +50,19 @@
       include_tasks: tasks/prompt-setup.yml
       tags: prompt
 
-    - name: "include_tasks => Kitty terminal"
+    - name: "include_tasks => kitty terminal"
       include_tasks: tasks/kitty.yml
       tags: kitty
 
     - name: "include_tasks => dotfiles"
       include_tasks: tasks/dotfiles-setup.yml
       tags: dotfiles
+
+    - name: "include_tasks => brave"
+      include_tasks: tasks/brave.yml
+      tags: 
+        - install
+        - brave
 
     - name: "include_tasks => desktop"
       include_tasks: tasks/desktop-setup.yml

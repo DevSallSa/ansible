@@ -1,0 +1,25 @@
+---
+- name: Add Brave Browser archive-keyring.gpg
+  become: true
+  get_url:
+    url: https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+    dest: /usr/share/keyrings/brave-browser-archive-keyring.gpg
+  tags: &brave ["install", "brave"]
+
+- name: Add Brave Browser PPA
+  become: true
+  apt_repository:
+    repo: deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main
+    state: present
+    filename: brave-browser-release
+  tags: *brave
+  when: ansible_distribution in ["Pop!_OS", "Ubuntu", "Debian"]
+
+- name: Install Brave Browser
+  become: true
+  apt:
+    update_cache: yes
+    name: brave-browser
+  tags: *brave
+  when: ansible_distribution in ["Pop!_OS", "Ubuntu", "Debian"]
+...
