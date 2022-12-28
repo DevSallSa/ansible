@@ -38,6 +38,8 @@
     # Insert ENV at line 6
     sed -i "5i export XDG_DATA_HOME=$HOME/.local/share" "{{ lookup('env', 'HOME') }}/.zshrc"
     sed -i "5i export XDG_CONFIG_HOME=$HOME/.config" "{{ lookup('env', 'HOME') }}/.zshrc"
+    sed -i "5i export DOTFILES=$HOME/.dotfiles" "{{ lookup('env', 'HOME') }}/.zshrc"
+    sed -i "5i export STOW_FOLDERS=$DOTFILES/config" "{{ lookup('env', 'HOME') }}/.zshrc"
 
   tags: *zsh
   when: oh_my_zsh.stat.isdir is not defined
