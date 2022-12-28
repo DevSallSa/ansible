@@ -4,6 +4,7 @@
   apt:
     name: 
       - python3-psutil
+      - python3-pip
       - aptitude
       - curl
       - htop

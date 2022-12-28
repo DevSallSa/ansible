@@ -8,11 +8,13 @@
   tags: &zsh ['install', 'dotfiles', 'zsh']
   when: ansible_distribution in ["Pop!_OS", "Ubuntu", "Debian"]
 
-    # TODO: change default shell
-#- name: Change default shell to zsh
-#  become: true
-#  shell: chsh -s $(which zsh)
-#  tags: *zsh
+- name: Set Z-Shell as default
+  become: true
+  user: 
+    name: "{{ ansible_user_id }}"
+    shell: /usr/bin/zsh
+  tags: *zsh
+
 
 - name: Check if Oh-My-Zsh is already installed
   stat:
@@ -31,7 +33,6 @@
 
     # Changing zsh theme
     sed "s/robbyrussell/gnzh/" -i "{{ lookup('env', 'HOME') }}/.zshrc"
-
   tags: *zsh
   when: oh_my_zsh.stat.isdir is not defined
 

@@ -42,6 +42,10 @@
       include_tasks: tasks/zsh-setup.yml
       tags: zsh
 
+    - name: "include_tasks => prompt setup"
+      include_tasks: tasks/prompt-setup.yml
+      tags: prompt
+
     - name: "include_tasks => dotfiles"
       include_tasks: tasks/dotfiles-setup.yml
       tags: dotfiles
