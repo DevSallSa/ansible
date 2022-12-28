@@ -1,0 +1,34 @@
+---
+- name: Copy wallpaper files
+  copy:
+    src: "{{ item }}"
+    dest: /usr/share/backgrounds/
+    owner: root
+    group: root
+  with_fileglob:
+    - files/backgrounds/*
+
+# set wallpaper for Gnome on Pop_OS!
+# Use dconf-cli for dumping dconf value
+# or just chech dconf-editor
+- name: Set wallpaper for Pop-COSMIC
+  become_user: "{{ lookup('env', 'USER') }}"  
+  dconf: 
+    key: "/org/gnome/desktop/background/picture-uri"
+    value: "'file:///usr/share/backgrounds/ironflat.jpg'"
+  when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
+
+- name: Set wallpaper for Pop-COSMIC dark mode
+  become_user: "{{ lookup('env', 'USER') }}"  
+  dconf: 
+    key: "/org/gnome/desktop/background/picture-uri-dark"
+    value: "'file:///usr/share/backgrounds/pantherflat.jpg'"
+  when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
+
+- name: Set wallpaper position
+  become_user: "{{ lookup('env', 'USER') }}"  
+  dconf: 
+    key: "/org/gnome/desktop/background/picture-options"
+    value: "'zoom'"
+  when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
+...

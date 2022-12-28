@@ -1,0 +1,9 @@
+---
+# TODO: install dotfiles
+- name: Set bash config
+  copy:
+    src: files/bashrc
+    dest: "{{ lookup('env', 'HOME') }}/.bashrc"
+    owner: "{{ lookup('env', 'USER') }}"
+    group: "{{ lookup('env', 'USER') }}"
+...

@@ -1,0 +1,12 @@
+---
+- name: Install packages
+  become: true
+  apt:
+    name: 
+      - python3-psutil
+      - aptitude
+      - htop
+      - tmux
+      - vim
+  when: ansible_distribution in ["Pop!_OS", "Ubuntu", "Debian"]
+...
