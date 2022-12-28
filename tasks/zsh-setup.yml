@@ -1,0 +1,51 @@
+---
+- name: Install Z-Shell
+  become: true
+  apt:
+    name: 
+      - zsh
+      - zsh-syntax-highlighting
+  tags: &zsh ['install', 'dotfiles', 'zsh']
+  when: ansible_distribution in ["Pop!_OS", "Ubuntu", "Debian"]
+
+    # TODO: change default shell
+#- name: Change default shell to zsh
+#  become: true
+#  shell: chsh -s $(which zsh)
+#  tags: *zsh
+
+- name: Check if Oh-My-Zsh is already installed
+  stat:
+    path: "{{ lookup('env', 'XDG_DATA_HOME') }}/oh-my-zsh"
+  register: oh_my_zsh
+  tags: *zsh
+
+- name: Install Oh-My-Zsh
+  become_user: "{{ lookup('env', 'USER') }}"
+  shell: |
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+    # Moving oh-my-zsh folder
+    mv "{{ lookup('env', 'HOME') }}/.oh-my-zsh" "{{ lookup('env', 'XDG_DATA_HOME') }}/oh-my-zsh"
+    sed "s/\$HOME\/\./\$XDG_DATA_HOME\//" -i "{{ lookup('env', 'HOME') }}/.zshrc"
+
+    # Changing zsh theme
+    sed "s/robbyrussell/gnzh/" -i "{{ lookup('env', 'HOME') }}/.zshrc"
+
+  tags: *zsh
+  when: oh_my_zsh.stat.isdir is not defined
+
+- name: Check if Z-Shell config exists
+  stat:
+    path: "{{ lookup('env', 'HOME') }}/.zshrc.pre-oh-my-zsh"
+  register: zsh_rc
+  tags: *zsh
+
+- name: Apply existing Z-Shell config
+  become_user: "{{ lookup('env', 'USER') }}"
+  shell: |
+    rm "{{ lookup('env', 'HOME') }}/.zshrc"
+    mv "{{ lookup('env', 'HOME') }}/.zshrc.pre-oh-my-zsh" "{{ lookup('env', 'HOME') }}/.zshrc"
+  tags: *zsh
+  when: zsh_rc.stat.exists == True
+...

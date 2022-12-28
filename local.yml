@@ -1,13 +1,9 @@
 ---
 - hosts: localhost
-  # In case of running specific tasks
-  tags: always
 
   # tell ansible to not use ssh
   connection: local
   
-  # use root profile to perform tasks
-  become: true
 
   # Tasks to perform first
   # tasks to complete before running roles
@@ -15,7 +11,12 @@
     
     # update cache for arch linux
     - name: pre-run | update package cache (arch)
-      tags: always
+      # use root profile to perform tasks
+      become: true
+      # In case of running specific tasks
+      tags: 
+        - install
+        - core
       pacman: update_cache=yes
       changed_when: False
       when: ansible_distribution == "Archlinux"
@@ -24,13 +25,28 @@
     # For getting system info with ansible,
     # $ ansible localhost -m gather_facts
     - name: pre-run | update package cache (Debian, Pop, Ubuntu,...)
-      tags: always
+      become: true
+      tags: 
+        - install
+        - core
       apt: update_cache=yes
       changed_when: False
       when: ansible_distribution in ["Pop!_OS", "Ubuntu", "Debian"]
 
   tasks:
-    - include_tasks: tasks/core-setup.yml
-    - include_tasks: tasks/desktop-setup.yml
-    - include_tasks: tasks/dotfiles-setup.yml
+    - name: "include_tasks => core setup"
+      include_tasks: tasks/core-setup.yml
+      tags: core
+
+    - name: "include_tasks => ZSH"
+      include_tasks: tasks/zsh-setup.yml
+      tags: zsh
+
+    - name: "include_tasks => dotfiles"
+      include_tasks: tasks/dotfiles-setup.yml
+      tags: dotfiles
+
+    - name: "include_tasks => desktop"
+      include_tasks: tasks/desktop-setup.yml
+      tags: desktop
 ...          

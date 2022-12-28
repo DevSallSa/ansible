@@ -5,7 +5,11 @@ sudo apt install software-properties-common
 sudo apt-add-repository --yes --update ppa:ansible/ansible
 sudo apt install ansible
 
+export XDG_CONFIG_HOME="$HOME"/.config
+export XDG_DATA_HOME="$HOME"/.local/share
+
 ## pull ansible
 # ansible-pull -K -U https://github.com/DevSallSa/ansible.git
+# ansible-playbook -K --vault-pass-file "$HOME"/.vault-key local.yml
 #
 # ansible-pull -K --vault-pass-file "$HOME"/.vault-key -U https://github.com/DevSallSa/ansible.git

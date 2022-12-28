@@ -1,12 +1,17 @@
 ---
-- name: Install packages
+- name: Install core packages
   become: true
   apt:
     name: 
       - python3-psutil
       - aptitude
+      - curl
       - htop
       - tmux
       - vim
+      - wget
   when: ansible_distribution in ["Pop!_OS", "Ubuntu", "Debian"]
+  tags:
+    - install
+    - core
 ...
