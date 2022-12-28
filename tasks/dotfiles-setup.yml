@@ -6,4 +6,5 @@
     dest: "{{ lookup('env', 'HOME') }}/.bashrc"
     owner: "{{ lookup('env', 'USER') }}"
     group: "{{ lookup('env', 'USER') }}"
+  tags: dotfiles
 ...
