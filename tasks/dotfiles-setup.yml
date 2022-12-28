@@ -1,5 +1,6 @@
 ---
 # TODO: install dotfiles
+# - delete config folder to be stowed
 - name: Set bash config
   copy:
     src: files/bashrc

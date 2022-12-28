@@ -35,4 +35,33 @@
     value: "'zoom'"
   tags: *desktop
   when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
+
+- name: Set Kitty terminal shortcut name
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/name"
+    value: "'Kitty Terminal'"
+  tags: *desktop
+  when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
+
+- name: Set command for Kitty terminal shortcut
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/command"
+    value: "'kitty'"
+  tags: *desktop
+  when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
+
+- name: Map shortcut for Kitty terminal
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/binding"
+    value: "'<Super><Shift>t'"
+  tags: *desktop
+  when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
+
+    
+- name: Enable custom keybindings
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings"
+    value: "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
+  tags: *desktop
+  when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
 ...
