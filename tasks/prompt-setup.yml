@@ -1,0 +1,13 @@
+---
+- name: Install Starship prompt
+  become: true
+  shell: |
+    curl -sS https://starship.rs/install.sh -o /tmp/install-starship.sh
+    chmod +x /tmp/install-starship.sh
+    /tmp/install-starship.sh -y
+  tags: prompt
+
+- name: Setup Starship prompt
+  shell: echo 'eval "$(starship init zsh)"' >> "{{ lookup('env', 'HOME') }}/.zshrc"
+  tags: prompt
+...
