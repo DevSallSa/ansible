@@ -46,6 +46,10 @@
       include_tasks: tasks/prompt-setup.yml
       tags: prompt
 
+    - name: "include_tasks => Kitty terminal"
+      include_tasks: tasks/kitty.yml
+      tags: kitty
+
     - name: "include_tasks => dotfiles"
       include_tasks: tasks/dotfiles-setup.yml
       tags: dotfiles

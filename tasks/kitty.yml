@@ -1,0 +1,23 @@
+---
+- name: Install Kitty terminal
+  shell: |
+    curl -L https://sw.kovidgoyal.net/kitty/installer.sh  -o /tmp/install-kitty.sh
+    chmod +x /tmp/install-kitty.sh
+    mkdir -p "{{ lookup('env', 'HOME') }}/.local/bin"
+    /tmp/install-kitty.sh
+    ln -s "{{ lookup('env', 'HOME') }}/.local/kitty.app/bin/kitty" "{{ lookup('env', 'HOME') }}/.local/bin/"
+  tags: 
+    - install
+    - kitty
+
+- name: Create Kitty Icon
+  shell: |
+    cp ~/.local/kitty.app/share/applications/kitty.desktop ~/.local/share/applications/
+    # Open text files and images in kitty
+    cp ~/.local/kitty.app/share/applications/kitty-open.desktop ~/.local/share/applications/
+    sed -i "s|Icon=kitty|Icon=/home/$USER/.local/kitty.app/share/icons/hicolor/256x256/apps/kitty.png|g" ~/.local/share/applications/kitty*.desktop
+    sed -i "s|Exec=kitty|Exec=/home/$USER/.local/kitty.app/bin/kitty|g" ~/.local/share/applications/kitty*.desktop
+  tags: 
+    - install
+    - kitty 
+...
