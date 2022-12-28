@@ -11,7 +11,7 @@
 
 # set wallpaper for Gnome on Pop_OS!
 # Use dconf-cli for dumping dconf value
-# or just chech dconf-editor
+# or just check dconf-editor
 - name: Set wallpaper for Pop-COSMIC
   become_user: "{{ lookup('env', 'USER') }}"  
   dconf: 
@@ -36,32 +36,44 @@
   tags: *desktop
   when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
 
-- name: Set Kitty terminal shortcut name
-  dconf:
-    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/name"
-    value: "'Kitty Terminal'"
+- name: Set Kitty terminal as default
+  become: true
+  community.general.alternatives:
+    name: x-terminal-emulator
+    link: /usr/bin/x-terminal-emulator
+    path: "{{ lookup('env', 'HOME') }}/.local/bin/kitty"
+    state: selected
   tags: *desktop
   when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
 
-- name: Set command for Kitty terminal shortcut
-  dconf:
-    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/command"
-    value: "'kitty'"
-  tags: *desktop
-  when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
-
-- name: Map shortcut for Kitty terminal
-  dconf:
-    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/binding"
-    value: "'<Super><Shift>t'"
-  tags: *desktop
-  when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
-
-    
-- name: Enable custom keybindings
-  dconf:
-    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings"
-    value: "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
-  tags: *desktop
-  when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
+# Set Gnome custom keybindings
+    # TODO: mapping brave
+    #- name: Set Kitty terminal shortcut name
+    #  dconf:
+    #    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/name"
+    #    value: "'Gnome Terminal'"
+    #  tags: *desktop
+    #  when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
+    #
+    #- name: Set command for Kitty terminal shortcut
+    #  dconf:
+    #    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/command"
+    #    value: "'gnome-terminal'"
+    #  tags: *desktop
+    #  when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
+    #
+    #- name: Map shortcut for Kitty terminal
+    #  dconf:
+    #    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/binding"
+    #    value: "'<Super><Shift>t'"
+    #  tags: *desktop
+    #  when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
+    #
+    #    
+    #- name: Enable custom keybindings
+    #  dconf:
+    #    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings"
+    #    value: "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
+    #  tags: *desktop
+    #  when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
 ...
