@@ -34,6 +34,10 @@
       when: ansible_distribution in ["Pop!_OS", "Ubuntu", "Debian"]
 
   tasks:
+    - name: "include_tasks => ansible setup"
+      include_tasks: tasks/ansible.yml
+      tags: ansible
+
     - name: "include_tasks => core setup"
       include_tasks: tasks/core-setup.yml
       tags: core
