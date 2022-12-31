@@ -3,6 +3,21 @@
 
   # tell ansible to not use ssh
   connection: local
+
+  vars:
+    git_config_user_email: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          61636135343362353438343934656666316338373265326430646365636531383633316665353338
+          3364613765643336373036386666373061396331653065340a386331343161383663303331326635
+          33343364333636306438323066306566656633663135363130353561356136356531646139643534
+          3161393939343035330a633130626262636366363863356534356235353137666565653764636465
+          31366565623436363734383766353137656636636166376337656264643963623561
+    git_config_user_name: "DevSallSa"
+    git_config_core_editor: "vim"
+    git_config_core_autocrlf: "input"
+    git_config_init_default_branch: "main"
+    git_config_pull_rebase: "false"
+    git_config_alias_adog: "log --all --decorate --oneline  --graph"
   
 
   # Tasks to perform first
@@ -53,6 +68,9 @@
     - name: "include_tasks => kitty terminal"
       include_tasks: tasks/kitty.yml
       tags: kitty
+
+    - name: "import_tasks => git"
+      import_tasks: tasks/git.yml
 
     - name: "include_tasks => dotfiles"
       include_tasks: tasks/dotfiles-setup.yml

@@ -1,0 +1,68 @@
+- name: "(Git) set username"
+  community.general.git_config:
+    name: user.name
+    scope: global
+    value: "{{ git_config_user_name }}"
+  tags: 
+    - git
+    - git-personal
+
+- name: "(Git) set user email"
+  community.general.git_config:
+    name: user.email
+    scope: global
+    value: "{{ git_config_user_email }}"
+  tags: 
+    - git
+    - git-personal
+
+- name: "(Git) set default editor"
+  community.general.git_config:
+    name: core.editor
+    scope: global
+    value: "{{ git_config_core_editor }}"
+  tags: git
+
+- name: "(Git) set CRLF endings strategy"
+  community.general.git_config:
+    name: core.autocrlf
+    scope: global
+    value: "{{ git_config_core_autocrlf }}"
+  tags: git
+
+- name: "(Git) set defaultBranch name"
+  community.general.git_config:
+    name: init.defaultBranch
+    scope: global
+    value: "{{ git_config_init_default_branch }}"
+  tags: git
+
+- name: "(Git) set pull strategy"
+  community.general.git_config:
+    name: pull.rebase
+    scope: global
+    value: "{{ git_config_pull_rebase }}"
+  tags: git
+
+- name: "(Git) set aliases"
+  community.general.git_config:
+    name: alias.adog
+    scope: global
+    value: "{{ git_config_alias_adog }}"
+  tags: git
+
+- stat:
+    path: "{{ lookup('env','HOME') }}/.gitconfig"
+  register: gitconfig
+  tags: 
+    - git
+    - git-personal
+
+- name: "(Git) finish config"
+  shell: |
+    mkdir -p "{{ lookup('env','XDG_CONFIG_HOME')}}/git"
+    mv "{{ lookup('env','HOME') }}/.gitconfig" "{{ lookup('env','XDG_CONFIG_HOME') }}/git/config"
+  tags: 
+    - git
+    - git-personal
+  when: gitconfig.stat.exists
