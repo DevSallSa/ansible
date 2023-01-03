@@ -5,6 +5,7 @@
     name: 
       - python3-pip
       - aptitude
+      - batcat
       - curl
       - htop
       - tmux
