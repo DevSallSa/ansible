@@ -98,4 +98,7 @@
 
     - name: "import_tasks => nodejs"
       import_tasks: tasks/nodejs.yml
+
+    - name: "import_tasks => node packages"
+      import_tasks: tasks/nodejs-packages.yml
 ...          

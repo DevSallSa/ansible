@@ -23,3 +23,9 @@
     echo '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"' >> \
                                 "{{ lookup('env', 'HOME') }}/.zshrc"
   tags: *nodejs
+
+- name: Install latest Node.js LTS
+  become: true
+  become_user: "{{ lookup('env', 'USER') }}"
+  command: /usr/bin/zsh -c 'source $HOME/.zshrc; nvm install --lts'
+  tags: *nodejs
