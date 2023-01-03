@@ -1,0 +1,27 @@
+---
+# Microsoft fonts are proprietary
+# we can't use them for commercial use
+- name: Install microsoft proprietary fonts
+  become: yes
+  apt:
+    name: ttf-mscorefonts-installer
+  tags: &font ["install", "fonts"]
+
+- name: Download JetBrains, VictorMono nerd-fonts
+  shell: |
+    curl -fsSL https://github.com/ryanoasis/nerd-fonts/releases/download/v2.3.0-RC/VictorMono.zip \
+                -o "{{ ansible_tmp_path }}/VictorMono.zip"
+    curl -fsSL https://github.com/ryanoasis/nerd-fonts/releases/download/v2.3.0-RC/JetBrainsMono.zip \
+                -o "{{ ansible_tmp_path }}/JetBrainsMono.zip"
+  tags: *font
+
+- name: Install JetBrains, VictorMono nerd-fonts
+  shell: |
+    mkdir -p "{{ fonts_path }}"
+    unzip -uo "{{ ansible_tmp_path }}/VictorMono.zip" \
+                -d "{{ fonts_path }}/NerdFonts/VictorMono"
+    unzip -uo "{{ ansible_tmp_path }}/JetBrainsMono.zip" \
+                -d "{{ fonts_path }}/NerdFonts/JetBrainsMono"
+    fc-cache -fv "{{ fonts_path }}"
+  tags: *font
+...
