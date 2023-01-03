@@ -1,4 +1,8 @@
 ---
+# TODO: 
+#   - Use import_tasks only
+#   - Standardize output
+
 - hosts: localhost
 
   # tell ansible to not use ssh
@@ -18,8 +22,8 @@
     git_config_init_default_branch: "main"
     git_config_pull_rebase: "false"
     git_config_alias_adog: "log --all --decorate --oneline  --graph"
-    src_key: "./.ssh/id_rsa"
-    dest_key: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa"
+    ssh_src_path: "./.ssh/"
+    ssh_dest_path: "{{ lookup('env', 'HOME') }}/.ssh/"
   
 
   # Tasks to perform first
@@ -51,12 +55,12 @@
       when: ansible_distribution in ["Pop!_OS", "Ubuntu", "Debian"]
 
   tasks:
-    - name: "import_tasks => git"
-      import_tasks: tasks/ssh.yml
-
     - name: "include_tasks => ansible setup"
       include_tasks: tasks/ansible.yml
       tags: ansible
+
+    - name: "import_tasks => git"
+      import_tasks: tasks/ssh.yml
 
     - name: "include_tasks => core setup"
       include_tasks: tasks/core-setup.yml
