@@ -1,12 +1,13 @@
 ---
 # TODO: 
+#   - asdf or sdkman task
+#   - productivity tasks
+#   - dotfiles
+#   - download nerd font
 #   - Use import_tasks only
 #   - Standardize output
 #   - Gather tasks by tags
 #   - use ansible_env instead of lookup
-#   - asdf or sdkman task
-#   - productivity tasks
-#   - dotfiles
 
 - hosts: localhost
 
