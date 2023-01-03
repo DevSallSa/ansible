@@ -14,3 +14,5 @@ export XDG_DATA_HOME="$HOME"/.local/share
 #
 #ansible-pull -K --vault-pass-file "$HOME"/.vault-key \
 #	--skip-tags=ssh,authorized-ssh-keys -U https://github.com/DevSallSa/ansible.git
+
+echo "RELOAD YOUR SYSTEM TO BE OK !!

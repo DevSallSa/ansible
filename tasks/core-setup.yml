@@ -3,11 +3,14 @@
   become: true
   apt:
     name: 
-      - python3-pip
       - aptitude
       - batcat
+      - ca-certificates
       - curl
+      - gnupg
       - htop
+      - lsb_release
+      - python3-pip
       - tmux
       - vim
       - xclip

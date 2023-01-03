@@ -1,0 +1,61 @@
+- name: (docker) Set up kvm module
+  become: yes
+  shell: |
+    modprobe kvm
+    modprobe kvm_intel
+    usermod -aG kvm "{{ lookup('env', 'USER') }}"
+  tags: &docker ["install", "docker"]
+
+- name: (docker) Cleanup for docker installation
+  become: yes
+  shell: |
+    rm -rf "{{ lookup('env', 'HOME') }}"/.docker
+    rm -rf /usr/local/bin/com.docker.cli
+  tags: *docker
+
+- name: (docker) Cleanup packages for docker installation
+  become: yes
+  apt:
+    name: docker-desktop
+    state: absent
+    purge: yes
+  tags: *docker
+
+- name: (docker) Add official GPG key
+  become: yes
+  shell: |
+    mkdir -p /etc/apt/keyrings
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+  tags: *docker
+
+- name: (docker) Add docker PPA
+  become: yes
+  apt_repository:
+    repo: deb [signed-by=/etc/apt/keyrings/docker.gpg arch=amd64] https://download.docker.com/linux/ubuntu "{{ ansible_distribution_release }}" stable
+    state: present
+    filename: docker
+  tags: *docker
+  when: ansible_distribution in ["Pop!_OS", "Ubuntu", "Debian"]
+
+- name: (docker) Download docker desktop
+  become: yes
+  get_url:
+    url: https://desktop.docker.com/linux/main/amd64/docker-desktop-4.15.0-amd64.deb
+    dest: /tmp/docker-desktop.deb
+  tags: *docker
+
+- name: (docker) Install docker desktop
+  become: yes
+  apt:
+    deb: /tmp/docker-desktop.deb
+  tags: *docker
+  when: ansible_distribution in ["Pop!_OS", "Ubuntu", "Debian"]    
+
+- name: (docker) Start docker desktop service
+  ansible.builtin.systemd:
+    name: docker-desktop
+    state: started
+    scope: user
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ ansible_user_uid }}"
+  tags: *docker

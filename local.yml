@@ -3,6 +3,7 @@
 #   - Use import_tasks only
 #   - Standardize output
 #   - Gather tasks by tags
+#   - use ansible_env instead of lookup
 
 - hosts: localhost
 
@@ -104,4 +105,7 @@
     - name: "include_tasks => dotfiles"
       include_tasks: tasks/dotfiles-setup.yml
       tags: dotfiles
+
+    - name: "import_tasks => docker"
+      import_tasks: tasks/docker-setup.yml
 ...          
