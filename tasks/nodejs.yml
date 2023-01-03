@@ -1,11 +1,11 @@
-- name: Get Node Version Manager (NVM)
+- name: Get Node Version Manager (nvm)
   ansible.builtin.git:
     repo: 'https://github.com/nvm-sh/nvm.git'
     dest: "{{ lookup('env', 'XDG_CONFIG_HOME') }}/nvm"
     force: yes
   tags: &nodejs [ "install", "nodejs"]
 
-- name: Install Node Version Manager (NVM)
+- name: Install Node Version Manager (nvm)
   become: yes
   shell: |
     cd "{{ lookup('env', 'XDG_CONFIG_HOME') }}/nvm" && \
