@@ -12,4 +12,10 @@
   shell: ansible-galaxy collection install -r requirements.yml --upgrade
   tags:
     - ansible
+
+- name: Create ansible temp directory
+  file:
+    dest: "{{ ansible_tmp_path }}"
+    state: directory
+  tags: ansible
 ...

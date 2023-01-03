@@ -8,6 +8,7 @@
 #   - Standardize output
 #   - Gather tasks by tags
 #   - use ansible_env instead of lookup
+#   - format yml
 
 - hosts: localhost
 
@@ -30,6 +31,7 @@
     git_config_alias_adog: "log --all --decorate --oneline  --graph"
     ssh_src_path: "./.ssh/"
     ssh_dest_path: "{{ lookup('env', 'HOME') }}/.ssh/"
+    ansible_tmp_path: "/tmp/ansible"
   
 
   # Tasks to perform first
@@ -99,6 +101,9 @@
 
     - name: "import_tasks => node packages"
       import_tasks: tasks/nodejs-packages.yml
+
+    - name: "import_tasks => sdkman!"
+      import_tasks: tasks/sdkman.yml
 
     - name: "include_tasks => brave"
       include_tasks: tasks/brave.yml

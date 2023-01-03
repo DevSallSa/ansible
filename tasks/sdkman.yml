@@ -1,0 +1,14 @@
+---
+- name: Download SDKMAN!
+  get_url:
+    url: "https://get.sdkman.io"
+    dest: "{{ ansible_tmp_path }}/sdkman.sh"
+  tags: &sdkman ["install", "sdkman"]
+
+- name: Install SDKMAN!
+  shell: |
+    chmod +x "{{ ansible_tmp_path }}/sdkman.sh"
+    export SDKMAN_DIR="{{ ansible_env.XDG_DATA_HOME }}/sdkman"
+    "{{ ansible_tmp_path }}/sdkman.sh"
+  tags: *sdkman
+...    
