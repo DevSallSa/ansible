@@ -82,15 +82,8 @@
     - name: "import_tasks => git"
       import_tasks: tasks/git.yml
 
-    - name: "include_tasks => dotfiles"
-      include_tasks: tasks/dotfiles-setup.yml
-      tags: dotfiles
-
-    - name: "include_tasks => brave"
-      include_tasks: tasks/brave.yml
-      tags: 
-        - install
-        - brave
+    - name: "import_tasks => neovim"
+      import_tasks: tasks/neovim.yml
 
     - name: "include_tasks => desktop"
       include_tasks: tasks/desktop-setup.yml
@@ -101,4 +94,14 @@
 
     - name: "import_tasks => node packages"
       import_tasks: tasks/nodejs-packages.yml
+
+    - name: "include_tasks => brave"
+      include_tasks: tasks/brave.yml
+      tags: 
+        - install
+        - brave
+
+    - name: "include_tasks => dotfiles"
+      include_tasks: tasks/dotfiles-setup.yml
+      tags: dotfiles
 ...          

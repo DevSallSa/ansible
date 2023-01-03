@@ -1,0 +1,19 @@
+- name: Create Apps directory
+  file:
+    dest: "{{ lookup('env', 'HOME') }}/Apps"
+    state: directory
+  tags: &nvim ['install', 'neovim']
+
+- name: Download latest neovim version
+  shell: |
+    curl -L https://github.com/neovim/neovim/releases/download/stable/nvim.appimage \
+      -o "{{ lookup('env', 'HOME') }}"/Apps/nvim.appimage
+    chmod +x "{{ lookup('env', 'HOME') }}"/Apps/nvim.appimage
+  tags: *nvim
+
+- name: Install neovim
+  file:
+    src: "{{ lookup('env', 'HOME') }}/Apps/nvim.appimage"
+    dest: "{{ lookup('env', 'HOME') }}/.local/bin/nvim"
+    state: link
+  tags: *nvim
