@@ -1,6 +1,5 @@
 ---
 # TODO: 
-#   - asdf or sdkman task
 #   - productivity tasks
 #   - dotfiles
 #   - download nerd font
@@ -105,15 +104,15 @@
     - name: "import_tasks => sdkman!"
       import_tasks: tasks/sdkman.yml
 
+    - name: "include_tasks => dotfiles"
+      include_tasks: tasks/dotfiles-setup.yml
+      tags: dotfiles
+
     - name: "include_tasks => brave"
       include_tasks: tasks/brave.yml
       tags: 
         - install
         - brave
-
-    - name: "include_tasks => dotfiles"
-      include_tasks: tasks/dotfiles-setup.yml
-      tags: dotfiles
 
     - name: "import_tasks => docker"
       import_tasks: tasks/docker-setup.yml
