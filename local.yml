@@ -2,6 +2,7 @@
 # TODO: 
 #   - Use import_tasks only
 #   - Standardize output
+#   - Gather tasks by tags
 
 - hosts: localhost
 
@@ -59,7 +60,7 @@
       include_tasks: tasks/ansible.yml
       tags: ansible
 
-    - name: "import_tasks => git"
+    - name: "import_tasks => ssh"
       import_tasks: tasks/ssh.yml
 
     - name: "include_tasks => core setup"
@@ -94,4 +95,7 @@
     - name: "include_tasks => desktop"
       include_tasks: tasks/desktop-setup.yml
       tags: desktop
+
+    - name: "import_tasks => nodejs"
+      import_tasks: tasks/nodejs.yml
 ...          

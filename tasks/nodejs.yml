@@ -1,0 +1,25 @@
+- name: Get Node Version Manager (NVM)
+  ansible.builtin.git:
+    repo: 'https://github.com/nvm-sh/nvm.git'
+    dest: "{{ lookup('env', 'XDG_CONFIG_HOME') }}/nvm"
+    force: yes
+  tags: &nodejs [ "install", "nodejs"]
+
+- name: Install Node Version Manager (NVM)
+  become: yes
+  shell: |
+    cd "{{ lookup('env', 'XDG_CONFIG_HOME') }}/nvm" && \
+    git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" \
+                          $(git rev-list --tags --max-count=1)` && \
+    chmod +x ./nvm.sh && ./nvm.sh
+  tags: *nodejs
+
+- name: Load nvm in Z-shell
+  shell: |
+    echo 'export NVM_DIR="$XDG_CONFIG_HOME/nvm"' >> "{{ lookup('env', 'HOME') }}/.zshrc"
+    echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> \
+                                "{{ lookup('env', 'HOME') }}/.zshrc"
+
+    echo '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"' >> \
+                                "{{ lookup('env', 'HOME') }}/.zshrc"
+  tags: *nodejs
