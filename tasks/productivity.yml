@@ -3,7 +3,196 @@
   file:
     dest: "/opt/bin"
     state: directory
+  tags: &prod ["install", "productivity"]
+
+- name: Install peek for screen recording
+  become: yes
+  apt:
+    name: peek
+  when: ansible_distribution in ["Pop!_OS", "Ubuntu", "Debian"]
+  tags: *prod
+
+- name: Install cheese for webcam
+  become: yes
+  apt:
+    name: cheese
+  when: ansible_distribution in ["Pop!_OS", "Ubuntu", "Debian"]
+  tags: *prod
+
+- name: Install gnome-pomodoro
+  become: yes
+  apt:
+    name: gnome-shell-pomodoro
+  when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
+  tags: *prod
+
+- name: Remove old gnome-calendar
+  become: yes
+  apt:
+    name: gnome-calendar
+    state: absent
+  when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
+  tags: 
+    - *prod
+    - flatpak
+
+- name: Install flatpak
+  become: yes
+  apt:
+    name: flatpak
+  when: ansible_distribution in ["Pop!_OS", "Ubuntu", "Debian"]
+  tags: *prod
+
+- name: Set Flathub repository
+  community.general.flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
+    method: user
+  when: ansible_distribution in ["Pop!_OS", "Ubuntu", "Debian"]
+  tags: *prod
+
+- name: (Flatpak) Install Gnome Calendar
+  community.general.flatpak:
+    name: org.gnome.Calendar
+    state: present
+    method: user
   tags:
-    - install
-    - productivity
-...
+    - *prod
+    - flatpak
+
+- name: (Flatpak) Install Planner
+  community.general.flatpak:
+    name: com.github.alainm23.planner
+    state: present
+    method: user
+  tags:
+    - *prod
+    - flatpak
+
+- name: (Flatpak) Install Remmina
+  community.general.flatpak:
+    name: org.remmina.Remmina
+    state: present
+    method: user
+  tags:
+    - *prod
+    - flatpak
+
+- name: (Flatpak) Install WPS
+  community.general.flatpak:
+    name: com.wps.Office
+    state: present
+    method: user
+  tags:
+    - *prod
+    - flatpak
+
+- name: (Flatpak) Install Zoom
+  community.general.flatpak:
+    name: us.zoom.Zoom
+    state: present
+    method: user
+  tags:
+    - *prod
+    - flatpak
+
+- name: (Flatpak) Install Typora
+  community.general.flatpak:
+    name: io.typora.Typora
+    state: present
+    method: user
+  tags:
+    - *prod
+    - flatpak
+
+- name: (Flatpak) Install Gnome sticky note
+  community.general.flatpak:
+    name: org.gnome.Notes
+    state: present
+    method: user
+  tags:
+    - *prod
+    - flatpak
+
+- name: (Flatpak) Install OBS Studio
+  community.general.flatpak:
+    name: com.obsproject.Studio
+    state: present
+    method: user
+  tags:
+    - *prod
+    - flatpak
+
+- name: (Flatpak) Install Flameshot
+  community.general.flatpak:
+    name: org.flameshot.Flameshot
+    state: present
+    method: user
+  tags:
+    - *prod
+    - flatpak
+
+- name: (Flatpak) Install Gimp
+  community.general.flatpak:
+    name: org.gimp.GIMP
+    state: present
+    method: user
+  tags:
+    - *prod
+    - flatpak
+
+- name: (Flatpak) Install Inkscape
+  community.general.flatpak:
+    name: org.inkscape.Inkscape
+    state: present
+    method: user
+  tags:
+    - *prod
+    - flatpak
+
+- name: (Flatpak) Install Audacity
+  community.general.flatpak:
+    name: org.audacityteam.Audacity
+    state: present
+    method: user
+  tags:
+    - *prod
+    - flatpak
+
+- name: (Flatpak) Install Rhythmbox
+  community.general.flatpak:
+    name: org.gnome.Rhythmbox3
+    state: present
+    method: user
+  tags:
+    - *prod
+    - flatpak
+
+- name: (Flatpak) Install Nextcloud
+  community.general.flatpak:
+    name: com.nextcloud.desktopclient.nextcloud
+    state: present
+    method: user
+  tags:
+    - *prod
+    - flatpak
+
+- name: (Flatpak) Install Bitwarden
+  community.general.flatpak:
+    name: com.bitwarden.desktop
+    state: present
+    method: user
+  tags:
+    - *prod
+    - flatpak
+
+- name: (Flatpak) Install Spotify
+  community.general.flatpak:
+    name: com.spotify.Client
+    state: present
+    method: user
+  tags:
+    - *prod
+    - flatpak
+...      

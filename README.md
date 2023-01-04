@@ -8,7 +8,7 @@ We avoid to automate specific configuration like:
 
 ## TODO:
 
-- [ ] Create productivity tasks
+- [x] Create productivity tasks
 - [ ] Install personal dotfiles
 - [ ] Refactor: use `import_tasks` only instead of `include_tasks`
 - [ ] Refactor: standardize output

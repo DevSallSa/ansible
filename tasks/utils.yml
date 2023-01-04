@@ -1,0 +1,39 @@
+---
+- name: (Flatpak) Install Flatseal
+  community.general.flatpak:
+    name: com.github.tchx84.Flatseal
+    state: present
+    method: user
+  tags: &utils ["install", "flatpak", "utils"]
+
+- name: (Flatpak) Install Gnome DéjàDup
+  community.general.flatpak:
+    name: org.gnome.DejaDup
+    state: present
+    method: user
+  tags: *utils
+
+- name: (Flatpak) Install Gnome login manager
+  community.general.flatpak:
+    name: io.github.realmazharhussain.GdmSettings
+    state: present
+    method: user
+  tags: *utils
+  when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
+
+- name: (Flatpak) Install Gradience
+  community.general.flatpak:
+    name: com.github.GradienceTeam.Gradience
+    state: present
+    method: user
+  tags: *utils
+  when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
+
+- name: (Flatpak) Install Gnome extension manager
+  community.general.flatpak:
+    name: com.mattjakeman.ExtensionManager
+    state: present
+    method: user
+  tags: *utils
+  when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
+...

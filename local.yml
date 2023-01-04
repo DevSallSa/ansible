@@ -63,9 +63,6 @@
       include_tasks: tasks/core-setup.yml
       tags: core
 
-    - name: "import_tasks => productivity"
-      import_tasks: tasks/productivity.yml
-
     - name: "include_tasks => zsh"
       include_tasks: tasks/zsh-setup.yml
       tags: zsh
@@ -102,15 +99,24 @@
     - name: "import_tasks => sdkman!"
       import_tasks: tasks/sdkman.yml
 
-    - name: "include_tasks => dotfiles"
-      include_tasks: tasks/dotfiles-setup.yml
-      tags: dotfiles
-
     - name: "include_tasks => brave"
       include_tasks: tasks/brave.yml
       tags: 
         - install
         - brave
+
+    - name: "import_tasks => productivity"
+      import_tasks: tasks/productivity.yml
+
+    - name: "import_tasks => utilities"
+      import_tasks: tasks/utils.yml
+
+    - name: "import_tasks => entertainment"
+      import_tasks: tasks/entertainment.yml
+
+    - name: "include_tasks => dotfiles"
+      include_tasks: tasks/dotfiles-setup.yml
+      tags: dotfiles
 
     - name: "import_tasks => docker"
       import_tasks: tasks/docker-setup.yml
