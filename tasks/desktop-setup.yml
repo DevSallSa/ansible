@@ -1,4 +1,11 @@
 ---
+- name: Install Gnome tweaks tool
+  become: yes
+  apt:
+    name: gnome-tweaks
+  tags: &desktop ['desktop']
+  when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
+
 - name: Copy wallpaper files
   copy:
     src: "{{ item }}"
@@ -7,7 +14,6 @@
     group: root
   with_fileglob:
     - files/backgrounds/*
-  tags: &desktop ['desktop']
 
 # set wallpaper for Gnome on Pop_OS!
 # Use dconf-cli for dumping dconf value
