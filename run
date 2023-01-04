@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
 
+###################################################################
+# Description  : Run script for ansible execution
+# Author       : DevSallSa
+# Email        : sallyaxel@linuxmail.org
+# Date         : 2022-12-24
+# Version      : 1.0
+###################################################################
+
 sudo apt-get update -y
 sudo apt install software-properties-common
 sudo apt-add-repository --yes --update ppa:ansible/ansible
