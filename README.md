@@ -6,6 +6,9 @@ We avoid to automate specific configuration like:
 - DisplayLink => for docking station which support displaylink
 - Logiops => an unofficial driver for Logitech mice and keyboard
 
+
+> :warning: Don't try to install my ansible config blindly. It'll prompt an error.
+
 ## TODO:
 
 - [x] Create productivity tasks
