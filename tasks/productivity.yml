@@ -1,0 +1,9 @@
+---
+- name: Ensure /opt/bin directory exists.
+  file:
+    dest: "/opt/bin"
+    state: directory
+  tags:
+    - install
+    - core
+...

@@ -1,3 +1,4 @@
+---
 - name: Create Apps directory
   file:
     dest: "{{ lookup('env', 'HOME') }}/Apps"
@@ -17,3 +18,10 @@
     dest: "{{ lookup('env', 'HOME') }}/.local/bin/nvim"
     state: link
   tags: *nvim
+
+- name: Get packer plugin manager
+  ansible.builtin.git:
+    repo: 'https://github.com/wbthomason/packer.nvim'
+    dest: "{{ ansible_env.HOME) }}/.local/share/nvim/site/pack/packer/start/packer.nvim"
+  tags: *nvim
+...    

@@ -1,22 +1,41 @@
 ---
 - name: Install core packages
-  become: true
+  become: yes
   apt:
     name: 
       - aptitude
-      - batcat
+      - build-essential
       - ca-certificates
       - curl
       - gnupg
-      - htop
       - lsb_release
       - python3-pip
-      - tmux
-      - vim
-      - xclip
+      - tree
       - wget
   when: ansible_distribution in ["Pop!_OS", "Ubuntu", "Debian"]
-  tags:
-    - install
-    - core
+  tags: &core ["install", "core"]
+
+- name: Install productivity packages
+  become: yes
+  apt:
+    name: 
+      - bat
+      - gcc
+      - git
+      - htop
+      - jq
+      - make
+      - neofetch
+      - ripgrep
+      - shellcheck
+      - sqlite3
+      - ssh
+      - stow
+      - tmux
+      - valgrind
+      - vim
+      - xclip
+      - zip
+  when: ansible_distribution in ["Pop!_OS", "Ubuntu", "Debian"]
+  tags: *core
 ...
