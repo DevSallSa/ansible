@@ -115,8 +115,7 @@
       import_tasks: tasks/entertainment.yml
 
     - name: "include_tasks => dotfiles"
-      include_tasks: tasks/dotfiles-setup.yml
-      tags: dotfiles
+      import_tasks: tasks/dotfiles-setup.yml
 
     - name: "import_tasks => docker"
       import_tasks: tasks/docker-setup.yml

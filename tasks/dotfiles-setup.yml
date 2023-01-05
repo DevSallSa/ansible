@@ -1,11 +1,30 @@
 ---
 # TODO: install dotfiles
 # - delete config folder to be stowed
-- name: Set bash config
-  copy:
-    src: files/bashrc
-    dest: "{{ lookup('env', 'HOME') }}/.bashrc"
-    owner: "{{ lookup('env', 'USER') }}"
-    group: "{{ lookup('env', 'USER') }}"
-  tags: dotfiles
+- name: Cleanup before installing dotfiles
+  args:
+    executable: /usr/bin/bash
+  shell: |
+    old_configs=(Chiaki alacritty cabal firejail gdb kitty logid npm nvim \
+                  python tmux touchegg yarn zsh .clang-format aliases \ 
+                  shellcheckrc starship.toml)
+    mkdir -p /tmp/old-config
+    for config in "${old_configs[@]}"
+    do
+      cp -r "{{ ansible_env.HOME }}/.config/$config" /tmp/old-config 2> /dev/null
+    done
+
+    # Bad practices here!
+    #
+    # an error will occur if one of the old config doesn't exist and will
+    # fail the tasks. But I need to bypass this so the tasks will succeed.
+    # I'm faking the success with just an echo
+    echo "Yes I know want I'm doing here. So Let's gooooo!!!!!"
+  tags: dotfiless
+
+- name: Downloading dotfiles
+  ansible.builtin.git:
+    repo: git@github.com:DevSallSa/.dotfiles.git
+    dest: "{{ ansible_tmp_path }}/.dotfiles"
+  tags: dotfiless
 ...

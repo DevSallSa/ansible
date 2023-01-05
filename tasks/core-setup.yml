@@ -8,7 +8,7 @@
       - ca-certificates
       - curl
       - gnupg
-      - lsb_release
+      - lsb-release
       - python3-pip
       - tree
       - wget
