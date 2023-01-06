@@ -8,10 +8,16 @@
     old_configs=(Chiaki alacritty cabal firejail gdb kitty logid npm nvim \
                   python tmux touchegg yarn zsh .clang-format aliases \ 
                   shellcheckrc starship.toml)
-    mkdir -p /tmp/old-config
+    mkdir -p /tmp/old-configs
     for config in "${old_configs[@]}"
     do
-      cp -r "{{ ansible_env.HOME }}/.config/$config" /tmp/old-config 2> /dev/null
+      cp -r "{{ ansible_env.HOME }}/.config/$config" /tmp/old-configs 2> /dev/null
+    done
+
+    old_files=( "{{ item }}" )
+    for file in "${old_files[@]}"
+    do
+      cp -r "$file" /tmp/old-configs 2> /dev/null
     done
 
     # Bad practices here!
@@ -19,17 +25,16 @@
     # an error will occur if one of the old config doesn't exist and will
     # fail the tasks. But I need to bypass this so the tasks will succeed.
     # I'm faking the success with just an echo
-    echo "Yes I know want I'm doing here. So Let's gooooo!!!!!"
+    echo "Yes I know what I'm doing here. So Let's gooooo!!!!!"
   tags: dotfiless
-
-- name: Setting up new folders
-  become: yes
-  shell: mkdir -p /opt/bin
-  tags: dotfiless
+  with_fileglob:
+    - "{{ ansible_env.HOME }}/.zcompdump*"
+    - "{{ ansible_env.HOME }}/.zsh_*"
+    - "{{ ansible_env.HOME }}/.yarn*"
 
 - name: Download dotfiles
   ansible.builtin.git:
     repo: git@github.com:DevSallSa/.dotfiles.git
-    dest: "{{ ansible_tmp_path }}/.dotfiles"
+    dest: "{{ ansible_env.HOME }}/.dotfiles"
   tags: dotfiless
 ...

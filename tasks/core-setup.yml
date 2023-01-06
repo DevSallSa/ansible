@@ -39,4 +39,9 @@
       - zip
   when: ansible_distribution in ["Pop!_OS", "Ubuntu", "Debian"]
   tags: *core
+
+- name: Setting up new bin folders
+  become: yes
+  shell: mkdir -p /opt/bin
+  tags: *core
 ...
