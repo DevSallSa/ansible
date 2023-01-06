@@ -19,32 +19,32 @@
     git_config_pull_rebase: "false"
     git_config_alias_adog: "log --all --decorate --oneline  --graph"
     ssh_src_path: "./.ssh/"
-    ssh_dest_path: "{{ lookup('env', 'HOME') }}/.ssh/"
+    ssh_dest_path: "{{ ansible_env.HOME }}/.ssh/"
     ansible_tmp_path: "/tmp/ansible"
-  
+
 
   # Tasks to perform first
   # tasks to complete before running roles
   pre_tasks:
-    
+
     # update cache for arch linux
     - name: pre-run | update package cache (arch)
       # use root profile to perform tasks
       become: true
       # In case of running specific tasks
-      tags: 
+      tags:
         - install
         - core
       pacman: update_cache=yes
       changed_when: False
       when: ansible_distribution == "Archlinux"
-    
+
     # update cache for Debian and derivatives....
     # For getting system info with ansible,
     # $ ansible localhost -m gather_facts
     - name: pre-run | update package cache (Debian, Pop, Ubuntu,...)
       become: true
-      tags: 
+      tags:
         - install
         - core
       apt: update_cache=yes
@@ -83,6 +83,8 @@
 
     - name: "import_tasks => neovim"
       import_tasks: tasks/neovim.yml
+      vars:
+        neovim_file: "{{ ansible_env.HOME }}/Apps/nvim.appimage"
 
     - name: "import_tasks => nodejs"
       import_tasks: tasks/nodejs.yml
@@ -95,7 +97,7 @@
 
     - name: "include_tasks => brave"
       include_tasks: tasks/brave.yml
-      tags: 
+      tags:
         - install
         - brave
 
@@ -112,8 +114,7 @@
       import_tasks: tasks/dotfiles-setup.yml
 
     - name: "include_tasks => desktop"
-      include_tasks: tasks/desktop-setup.yml
-      tags: desktop
+      import_tasks: tasks/desktop-setup.yml
 
     - name: "import_tasks => docker"
       import_tasks: tasks/docker-setup.yml
@@ -121,4 +122,4 @@
     # TODO:
     #   - Prompt installation finish
     #   - Ask user to reboot system
-...          
+...

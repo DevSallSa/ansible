@@ -2,7 +2,7 @@
 - name: Install core packages
   become: yes
   apt:
-    name: 
+    name:
       - aptitude
       - build-essential
       - ca-certificates
@@ -19,7 +19,7 @@
 - name: Install productivity packages
   become: yes
   apt:
-    name: 
+    name:
       - bat
       - ffmpeg
       - gcc
@@ -28,6 +28,7 @@
       - jq
       - make
       - neofetch
+      - python3-venv
       - ripgrep
       - shellcheck
       - sqlite3

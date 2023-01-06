@@ -7,11 +7,13 @@
   when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
 
 - name: Copy wallpaper files
+  become: yes
   copy:
     src: "{{ item }}"
     dest: /usr/share/backgrounds/
     owner: root
     group: root
+  tags: *desktop
   with_fileglob:
     - files/backgrounds/*
 

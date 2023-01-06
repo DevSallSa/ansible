@@ -1,27 +1,47 @@
 ---
 - name: Create Apps directory
   file:
-    dest: "{{ lookup('env', 'HOME') }}/Apps"
+    dest: "{{ ansible_env.HOME }}/Apps"
     state: directory
   tags: &nvim ['install', 'neovim']
 
+- name: Check if neovim is already installed
+  stat:
+    path: "{{ ansible_env.HOME }}/.local/bin/nvim"
+  register: nvim
+  tags: *nvim
+
 - name: Download latest neovim version
+  args:
+    executable: /usr/bin/bash
   shell: |
     curl -L https://github.com/neovim/neovim/releases/download/stable/nvim.appimage \
-      -o "{{ lookup('env', 'HOME') }}"/Apps/nvim.appimage
-    chmod +x "{{ lookup('env', 'HOME') }}"/Apps/nvim.appimage
+        -o "{{ neovim_file }}"
+    chmod +x "{{ neovim_file }}"
   tags: *nvim
+  when: not nvim.stat.exists
 
 - name: Install neovim
   file:
-    src: "{{ lookup('env', 'HOME') }}/Apps/nvim.appimage"
-    dest: "{{ lookup('env', 'HOME') }}/.local/bin/nvim"
+    src: "{{ neovim_file }}"
+    dest: "{{ ansible_env.HOME }}/.local/bin/nvim"
     state: link
   tags: *nvim
+  when: not nvim.stat.exists
 
 - name: Get packer plugin manager
   ansible.builtin.git:
     repo: 'https://github.com/wbthomason/packer.nvim'
-    dest: "{{ ansible_env.HOME) }}/.local/share/nvim/site/pack/packer/start/packer.nvim"
+    dest: "{{ ansible_env.HOME }}/.local/share/nvim/site/pack/packer/start/packer.nvim"
+    depth: 1
   tags: *nvim
-...    
+
+- name: Installing neovim plugin
+  args:
+    executable: /usr/bin/bash
+  shell: |
+    nvim --headless -c 'autocmd User PackerComplete quitall' \
+                    -c 'PackerSync'
+  tags: *nvim
+  when: not nvim.stat.exists
+...
