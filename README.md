@@ -35,11 +35,14 @@ $ ./run --skip-tags=ssh,authorized-ssh-keys
     + [ ] Refactor: gather tasks by tags
     + [ ] Refactor: use `ansible_env` instead of `lookup`
     + [ ] Refactor: format yml
+    + [ ] Delete temporary processing folder
+    + [ ] Ask user to reboot system
 
 - Important:
     + [ ] Add option to run script
     + [ ] Make README.md more clear, more precise, more intuitive
     + [ ] Make this repo public
+    
 - Wishable:
     + [ ] Make runner script for removing all the configs
     + [ ] Create branches for different OS (this is veeeeerryyyy optional)
