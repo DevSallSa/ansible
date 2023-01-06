@@ -1,32 +1,43 @@
 - name: (npm) Install Yarn
-  become: true
-  become_user: "{{ lookup('env', 'USER') }}"
-  command: /usr/bin/zsh -c "source $HOME/.zshrc; 
+  become: yes
+  become_user: "{{ ansible_env.USER }}"
+  args:
+    executable: /usr/bin/zsh
+  shell: |
+    source "{{ ansible_env.HOME }}/.zshrc"
     nvm use node;
-    npm install -g yarn"
+    npm install -g yarn
   tags: &npm [ "install", "nodejs", "npm"]
 
-- name: (npm) Install typescript
-  become: true
-  become_user: "{{ lookup('env', 'USER') }}"
-  command: /usr/bin/zsh -c "source $HOME/.zshrc; 
+- name: (npm) Install Typescript
+  become: yes
+  become_user: "{{ ansible_env.USER }}"
+  args:
+    executable: /usr/bin/zsh
+  shell: |
+    source "{{ ansible_env.HOME }}/.zshrc"
     nvm use node;
-    npm install -g typescript"
+    npm install -g typescript
   tags: *npm
 
 - name: (npm) Install Create-React-App
-  become: true
-  become_user: "{{ lookup('env', 'USER') }}"
-  command: /usr/bin/zsh -c "source $HOME/.zshrc; 
+  become: yes
+  become_user: "{{ ansible_env.USER }}"
+  args:
+    executable: /usr/bin/zsh
+  shell: |
+    source "{{ ansible_env.HOME }}/.zshrc"
     nvm use node;
-    npm install -g create-react-app"
+    npm install -g create-react-app
   tags: *npm
 
 - name: (npm) Install Angular CLI
-  become: true
-  become_user: "{{ lookup('env', 'USER') }}"
-  command: /usr/bin/zsh -c "source $HOME/.zshrc; 
+  become: yes
+  become_user: "{{ ansible_env.USER }}"
+  args:
+    executable: /usr/bin/zsh
+  shell: |
+    source "{{ ansible_env.HOME }}/.zshrc"
     nvm use node;
-    npm install -g @angular/cli"
+    npm install -g @angular/cli
   tags: *npm
-
