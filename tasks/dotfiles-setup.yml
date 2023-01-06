@@ -1,6 +1,4 @@
 ---
-# TODO: install dotfiles
-# - delete config folder to be stowed
 - name: Cleanup before installing dotfiles
   args:
     executable: /usr/bin/bash
