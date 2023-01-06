@@ -37,6 +37,7 @@ $ ./run --skip-tags=ssh,authorized-ssh-keys
     + [ ] Refactor: format yml
     + [ ] Delete temporary processing folder
     + [ ] Ask user to reboot system
+    + [ ] Make final test on a real hardware
 
 - Important:
     + [ ] Add option to run script
