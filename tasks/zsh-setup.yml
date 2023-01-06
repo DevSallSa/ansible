@@ -5,7 +5,7 @@
     name: 
       - zsh
       - zsh-syntax-highlighting
-  tags: &zsh ['install', 'dotfiles', 'zsh']
+  tags: &zsh ['install', 'zsh']
   when: ansible_distribution in ["Pop!_OS", "Ubuntu", "Debian"]
 
 - name: Setting up Z-shell history folder

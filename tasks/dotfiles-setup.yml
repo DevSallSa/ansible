@@ -26,7 +26,7 @@
     # fail the tasks. But I need to bypass this so the tasks will succeed.
     # I'm faking the success with just an echo
     echo "Yes I know what I'm doing here. So Let's gooooo!!!!!"
-  tags: dotfiless
+  tags: dotfiles
   with_fileglob:
     - "{{ ansible_env.HOME }}/.zcompdump*"
     - "{{ ansible_env.HOME }}/.zsh_*"
@@ -36,11 +36,11 @@
   ansible.builtin.git:
     repo: git@github.com:DevSallSa/.dotfiles.git
     dest: "{{ ansible_env.HOME }}/.dotfiles"
-  tags: dotfiless
+  tags: dotfiles
 
 - name: Installing dotfiles
   args:
     executable: /usr/bin/bash
   shell: "{{ ansible_env.HOME }}/.dotfiles/install.sh"
-  tags: dotfiless
+  tags: dotfiles
 ...
