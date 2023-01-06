@@ -56,16 +56,14 @@
       include_tasks: tasks/ansible.yml
       tags: ansible
 
+    - name: "include_tasks => core setup"
+      import_tasks: tasks/core-setup.yml
+
     - name: "import_tasks => ssh"
       import_tasks: tasks/ssh.yml
 
-    - name: "include_tasks => core setup"
-      include_tasks: tasks/core-setup.yml
-      tags: core
-
     - name: "include_tasks => zsh"
-      include_tasks: tasks/zsh-setup.yml
-      tags: zsh
+      import_tasks: tasks/zsh-setup.yml
 
     - name: "include_tasks => prompt setup"
       include_tasks: tasks/prompt-setup.yml
@@ -85,10 +83,6 @@
 
     - name: "import_tasks => neovim"
       import_tasks: tasks/neovim.yml
-
-    - name: "include_tasks => desktop"
-      include_tasks: tasks/desktop-setup.yml
-      tags: desktop
 
     - name: "import_tasks => nodejs"
       import_tasks: tasks/nodejs.yml
@@ -117,6 +111,14 @@
     - name: "include_tasks => dotfiles"
       import_tasks: tasks/dotfiles-setup.yml
 
+    - name: "include_tasks => desktop"
+      include_tasks: tasks/desktop-setup.yml
+      tags: desktop
+
     - name: "import_tasks => docker"
       import_tasks: tasks/docker-setup.yml
+
+    # TODO:
+    #   - Prompt installation finish
+    #   - Ask user to reboot system
 ...          

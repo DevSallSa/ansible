@@ -22,7 +22,7 @@
 
 - name: Check if Oh-My-Zsh is already installed
   stat:
-    path: "{{ lookup('env', 'XDG_DATA_HOME') }}/oh-my-zsh"
+    path: "{{ ansible_env.XDG_DATA_HOME }}/oh-my-zsh"
   register: oh_my_zsh
   tags: *zsh
 
@@ -33,7 +33,7 @@
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
     # Moving oh-my-zsh folder
-    mv "{{ ansible_env.HOME }}/.oh-my-zsh" "{{ lookup('env', 'XDG_DATA_HOME') }}/oh-my-zsh"
+    mv "{{ ansible_env.HOME }}/.oh-my-zsh" "{{ ansible_env.XDG_DATA_HOME }}/oh-my-zsh"
     sed "s/\$HOME\/\./\$XDG_DATA_HOME\//" -i "{{ ansible_env.HOME }}/.zshrc"
 
     # Changing default oh-my-zsh theme
@@ -47,6 +47,15 @@
     sed -i "5i export DOTFILES=$HOME/.dotfiles" "{{ ansible_env.HOME }}/.zshrc"
     sed -i "5i export HISTFILE=$XDG_STATE_HOME/zsh/history" "{{ ansible_env.HOME }}/.zshrc"
   tags: *zsh
+  when: oh_my_zsh.stat.isdir is not defined
+
+- name: Install Zsh-syntax-highlighting
+  become: yes
+  become_user: "{{ ansible_env.USER }}"
+  ansible.builtin.git:
+    repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
+    dest: "{{ ansible_env.XDG_DATA_HOME }}/oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
+  tags: zshh
   when: oh_my_zsh.stat.isdir is not defined
 
 - name: Check if Z-Shell config exists

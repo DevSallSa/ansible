@@ -1,4 +1,5 @@
 ---
+# TODO: move this task to .dotfiles installation script
 - name: Cleanup before installing dotfiles
   args:
     executable: /usr/bin/bash
@@ -6,10 +7,10 @@
     old_configs=(Chiaki alacritty cabal firejail gdb kitty logid npm nvim \
                   python tmux touchegg yarn zsh .clang-format aliases \ 
                   shellcheckrc starship.toml)
-    mkdir -p /tmp/old-configs
+    mkdir -p /tmp/old-configs/config
     for config in "${old_configs[@]}"
     do
-      cp -r "{{ ansible_env.HOME }}/.config/$config" /tmp/old-configs 2> /dev/null
+      cp -r "{{ ansible_env.HOME }}/.config/$config" /tmp/old-configs/config 2> /dev/null
     done
 
     old_files=( "{{ item }}" )
@@ -17,6 +18,7 @@
     do
       cp -r "$file" /tmp/old-configs 2> /dev/null
     done
+    cp -r "{{ ansible_env.HOME }}/.yarn" /tmp/old-configs 2> /dev/null
 
     # Bad practices here!
     #
@@ -34,5 +36,11 @@
   ansible.builtin.git:
     repo: git@github.com:DevSallSa/.dotfiles.git
     dest: "{{ ansible_env.HOME }}/.dotfiles"
+  tags: dotfiless
+
+- name: Installing dotfiles
+  args:
+    executable: /usr/bin/bash
+  shell: "{{ ansible_env.HOME }}/.dotfiles/install.sh"
   tags: dotfiless
 ...

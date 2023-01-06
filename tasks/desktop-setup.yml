@@ -19,7 +19,8 @@
 # Use dconf-cli for dumping dconf value
 # or just check dconf-editor
 - name: Set wallpaper for Pop-COSMIC
-  become_user: "{{ lookup('env', 'USER') }}"  
+  become: yes
+  become_user: "{{ ansible_env.USER }}"  
   dconf: 
     key: "/org/gnome/desktop/background/picture-uri"
     value: "'file:///usr/share/backgrounds/ironflat.jpg'"
@@ -27,7 +28,8 @@
   when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
 
 - name: Set wallpaper for Pop-COSMIC dark mode
-  become_user: "{{ lookup('env', 'USER') }}"  
+  become: yes
+  become_user: "{{ ansible_env.USER }}"  
   dconf: 
     key: "/org/gnome/desktop/background/picture-uri-dark"
     value: "'file:///usr/share/backgrounds/pantherflat.jpg'"
@@ -35,7 +37,8 @@
   when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
 
 - name: Set wallpaper position
-  become_user: "{{ lookup('env', 'USER') }}"  
+  become: yes
+  become_user: "{{ ansible_env.USER }}"  
   dconf: 
     key: "/org/gnome/desktop/background/picture-options"
     value: "'zoom'"
@@ -43,7 +46,7 @@
   when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
 
 - name: Set Kitty terminal as default
-  become: true
+  become: yes
   community.general.alternatives:
     name: x-terminal-emulator
     link: /usr/bin/x-terminal-emulator

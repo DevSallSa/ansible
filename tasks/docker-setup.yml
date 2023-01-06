@@ -1,15 +1,17 @@
+---
+# TODO: use amd too
 - name: (docker) Set up kvm module
   become: yes
   shell: |
     modprobe kvm
     modprobe kvm_intel
-    usermod -aG kvm "{{ lookup('env', 'USER') }}"
+    usermod -aG kvm "{{ ansible_env.USER }}"
   tags: &docker ["install", "docker"]
 
 - name: (docker) Cleanup for docker installation
   become: yes
   shell: |
-    rm -rf "{{ lookup('env', 'HOME') }}"/.docker
+    rm -rf "{{ ansible_env.HOME }}"/.docker
     rm -rf /usr/local/bin/com.docker.cli
   tags: *docker
 
@@ -28,6 +30,8 @@
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
   tags: *docker
 
+# TODO: Why ??
+# We won't download from ppa so why ?
 - name: (docker) Add docker PPA
   become: yes
   apt_repository:
@@ -59,3 +63,4 @@
   environment:
     XDG_RUNTIME_DIR: "/run/user/{{ ansible_user_uid }}"
   tags: *docker
+...

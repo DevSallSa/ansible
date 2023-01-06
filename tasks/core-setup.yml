@@ -10,6 +10,7 @@
       - gnupg
       - lsb-release
       - python3-pip
+      - ssh
       - tree
       - wget
   when: ansible_distribution in ["Pop!_OS", "Ubuntu", "Debian"]
@@ -38,7 +39,7 @@
       - xclip
       - zip
   when: ansible_distribution in ["Pop!_OS", "Ubuntu", "Debian"]
-  tags: *core
+  tags: cores
 
 - name: Setting up new bin folders
   become: yes
