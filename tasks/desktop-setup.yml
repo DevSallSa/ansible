@@ -3,7 +3,7 @@
   become: yes
   apt:
     name: gnome-tweaks
-  tags: &desktop ['desktop']
+  tags: &desktop ["desktop"]
   when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
 
 - name: Copy wallpaper files
@@ -20,26 +20,26 @@
 # or just check dconf-editor
 - name: Set wallpaper for Pop-COSMIC
   become: yes
-  become_user: "{{ ansible_env.USER }}"  
-  dconf: 
+  become_user: "{{ ansible_env.USER }}"
+  dconf:
     key: "/org/gnome/desktop/background/picture-uri"
-    value: "'file:///usr/share/backgrounds/ironflat.jpg'"
+    value: "'file:///usr/share/backgrounds/light-paper.jpg'"
   tags: *desktop
   when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
 
 - name: Set wallpaper for Pop-COSMIC dark mode
   become: yes
-  become_user: "{{ ansible_env.USER }}"  
-  dconf: 
+  become_user: "{{ ansible_env.USER }}"
+  dconf:
     key: "/org/gnome/desktop/background/picture-uri-dark"
-    value: "'file:///usr/share/backgrounds/pantherflat.jpg'"
+    value: "'file:///usr/share/backgrounds/dark-paper.jpg'"
   tags: *desktop
   when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
 
 - name: Set wallpaper position
   become: yes
-  become_user: "{{ ansible_env.USER }}"  
-  dconf: 
+  become_user: "{{ ansible_env.USER }}"
+  dconf:
     key: "/org/gnome/desktop/background/picture-options"
     value: "'zoom'"
   tags: *desktop
@@ -53,9 +53,8 @@
     path: "{{ lookup('env', 'HOME') }}/.local/bin/kitty"
     state: selected
   tags: *desktop
-  when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
-
-
+  when:
+    "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
 
     ###########################
     # Gnome custom keybinding #
@@ -82,11 +81,9 @@
   tags: *desktop
   when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
 
-    
 - name: Enable custom keybindings
   dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings"
     value: "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
   tags: *desktop
   when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
-...
