@@ -2,9 +2,12 @@
 
 This is my personal ansible automation process made with long night, tears, blood (yes) 
 and some holidays sacrificed.
-> :warning: This ansible repo is mainly for Ubuntu based system (Ubuntu, Pop_OS!, etc...)
 
 > :warning: Don't try to run my ansible config blindly. It'll prompt an error. See GOAL section
+
+> :warning: This ansible repo is mainly for Ubuntu based system (Ubuntu, Pop\_OS!, etc...).
+
+> It's a little Pop\_OS! centric but I'll add more distro/OS later
 
 We avoid to automate specific configuration like:
 - DisplayLink => for docking station which support displaylink
@@ -17,6 +20,7 @@ Well,
 - I want to avoid the hassle of setting up a new UNIX\* dev environment
 - Make this repo as a reference for those who want to use ansible for setup automation
 
+## How to use ?
 
 If you really want to use my configs, then use the following command:
 ```bash
