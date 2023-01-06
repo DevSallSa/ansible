@@ -41,6 +41,7 @@ $ ./run --skip-tags=ssh,authorized-ssh-keys
 
 - Important:
     + [ ] Add option to run script
+    + [ ] Save log files
     + [ ] Make README.md more clear, more precise, more intuitive
     + [ ] Make this repo public
     
