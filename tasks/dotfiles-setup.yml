@@ -22,7 +22,12 @@
     echo "Yes I know want I'm doing here. So Let's gooooo!!!!!"
   tags: dotfiless
 
-- name: Downloading dotfiles
+- name: Setting up new folders
+  become: yes
+  shell: mkdir -p /opt/bin
+  tags: dotfiless
+
+- name: Download dotfiles
   ansible.builtin.git:
     repo: git@github.com:DevSallSa/.dotfiles.git
     dest: "{{ ansible_tmp_path }}/.dotfiles"

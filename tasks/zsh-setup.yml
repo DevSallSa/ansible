@@ -1,6 +1,6 @@
 ---
-- name: Install Z-Shell
-  become: true
+- name: Install Z-shell
+  become: yes
   apt:
     name: 
       - zsh
@@ -8,8 +8,12 @@
   tags: &zsh ['install', 'dotfiles', 'zsh']
   when: ansible_distribution in ["Pop!_OS", "Ubuntu", "Debian"]
 
+- name: Setting up Z-shell history folder
+  shell: mkdir -p "{{ ansible_env.HOME }}/.local/state/zsh"
+  tags: *zsh
+
 - name: Set Z-Shell as default
-  become: true
+  become: yes
   user: 
     name: "{{ ansible_user_id }}"
     shell: /usr/bin/zsh
@@ -23,38 +27,40 @@
   tags: *zsh
 
 - name: Install Oh-My-Zsh
-  become_user: "{{ lookup('env', 'USER') }}"
+  become: yes
+  become_user: "{{ ansible_env.USER }}"
   shell: |
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
     # Moving oh-my-zsh folder
-    mv "{{ lookup('env', 'HOME') }}/.oh-my-zsh" "{{ lookup('env', 'XDG_DATA_HOME') }}/oh-my-zsh"
-    sed "s/\$HOME\/\./\$XDG_DATA_HOME\//" -i "{{ lookup('env', 'HOME') }}/.zshrc"
+    mv "{{ ansible_env.HOME }}/.oh-my-zsh" "{{ lookup('env', 'XDG_DATA_HOME') }}/oh-my-zsh"
+    sed "s/\$HOME\/\./\$XDG_DATA_HOME\//" -i "{{ ansible_env.HOME }}/.zshrc"
 
-    # Changing zsh theme
-    sed "s/robbyrussell/gnzh/" -i "{{ lookup('env', 'HOME') }}/.zshrc"
+    # Changing default oh-my-zsh theme
+    sed "s/robbyrussell/gnzh/" -i "{{ ansible_env.HOME }}/.zshrc"
     
-
     # Insert ENV at line 6
-    sed -i "5i export XDG_DATA_HOME=$HOME/.local/share" "{{ lookup('env', 'HOME') }}/.zshrc"
-    sed -i "5i export XDG_CONFIG_HOME=$HOME/.config" "{{ lookup('env', 'HOME') }}/.zshrc"
-    sed -i "5i export DOTFILES=$HOME/.dotfiles" "{{ lookup('env', 'HOME') }}/.zshrc"
-    sed -i "5i export STOW_FOLDERS=$DOTFILES/config" "{{ lookup('env', 'HOME') }}/.zshrc"
-
+    sed -i "5i export XDG_CACHE_HOME=$HOME/.cache" "{{ ansible_env.HOME }}/.zshrc"
+    sed -i "5i export XDG_CONFIG_HOME=$HOME/.config" "{{ ansible_env.HOME }}/.zshrc"
+    sed -i "5i export XDG_DATA_HOME=$HOME/.local/share" "{{ ansible_env.HOME }}/.zshrc"
+    sed -i "5i export XDG_STATE_HOME=$HOME/.local/state" "{{ ansible_env.HOME }}/.zshrc"
+    sed -i "5i export DOTFILES=$HOME/.dotfiles" "{{ ansible_env.HOME }}/.zshrc"
+    sed -i "5i export HISTFILE=$XDG_STATE_HOME/zsh/history" "{{ ansible_env.HOME }}/.zshrc"
   tags: *zsh
   when: oh_my_zsh.stat.isdir is not defined
 
 - name: Check if Z-Shell config exists
   stat:
-    path: "{{ lookup('env', 'HOME') }}/.zshrc.pre-oh-my-zsh"
+    path: "{{ ansible_env.HOME }}/.zshrc.pre-oh-my-zsh"
   register: zsh_rc
   tags: *zsh
 
 - name: Apply existing Z-Shell config
-  become_user: "{{ lookup('env', 'USER') }}"
+  become: yes
+  become_user: "{{ ansible_env.USER }}"
   shell: |
-    rm "{{ lookup('env', 'HOME') }}/.zshrc"
-    mv "{{ lookup('env', 'HOME') }}/.zshrc.pre-oh-my-zsh" "{{ lookup('env', 'HOME') }}/.zshrc"
+    rm "{{ ansible_env.HOME }}/.zshrc"
+    mv "{{ ansible_env.HOME }}/.zshrc.pre-oh-my-zsh" "{{ ansible_env.HOME }}/.zshrc"
   tags: *zsh
   when: zsh_rc.stat.exists == True
 ...
