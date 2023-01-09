@@ -7,9 +7,9 @@
     source "{{ ansible_env.HOME }}/.zshrc"
     nvm use node;
     npm install -g yarn
-  tags: &npm [ "install", "nodejs", "npm"]
+  tags: &npm ["install", "nodejs", "npm"]
 
-- name: (npm) Install Typescript
+- name: (npm) Install PNPM
   become: yes
   become_user: "{{ ansible_env.USER }}"
   args:
@@ -17,10 +17,10 @@
   shell: |
     source "{{ ansible_env.HOME }}/.zshrc"
     nvm use node;
-    npm install -g typescript
+    npm install -g pnpm
   tags: *npm
 
-- name: (npm) Install Create-React-App
+- name: (pnpm) Install Typescript
   become: yes
   become_user: "{{ ansible_env.USER }}"
   args:
@@ -28,10 +28,10 @@
   shell: |
     source "{{ ansible_env.HOME }}/.zshrc"
     nvm use node;
-    npm install -g create-react-app
+    pnpm install -g typescript
   tags: *npm
 
-- name: (npm) Install Angular CLI
+- name: (pnpm) Install Create-React-App
   become: yes
   become_user: "{{ ansible_env.USER }}"
   args:
@@ -39,5 +39,16 @@
   shell: |
     source "{{ ansible_env.HOME }}/.zshrc"
     nvm use node;
-    npm install -g @angular/cli
+    pnpm install -g create-react-app
+  tags: *npm
+
+- name: (pnpm) Install Angular CLI
+  become: yes
+  become_user: "{{ ansible_env.USER }}"
+  args:
+    executable: /usr/bin/zsh
+  shell: |
+    source "{{ ansible_env.HOME }}/.zshrc"
+    nvm use node;
+    pnpm install -g @angular/cli
   tags: *npm
