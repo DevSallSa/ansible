@@ -18,6 +18,7 @@
     source "{{ ansible_env.HOME }}/.zshrc"
     nvm use node;
     npm install -g pnpm
+    pnpm setup
   tags: *npm
 
 - name: (pnpm) Install Typescript

@@ -2,10 +2,10 @@
 - name: Install Z-shell
   become: yes
   apt:
-    name: 
+    name:
       - zsh
       - zsh-syntax-highlighting
-  tags: &zsh ['install', 'zsh']
+  tags: &zsh ["install", "zsh"]
   when: ansible_distribution in ["Pop!_OS", "Ubuntu", "Debian"]
 
 - name: Setting up Z-shell history folder
@@ -14,15 +14,14 @@
 
 - name: Set Z-Shell as default
   become: yes
-  user: 
+  user:
     name: "{{ ansible_user_id }}"
     shell: /usr/bin/zsh
   tags: *zsh
 
-
 - name: Check if Oh-My-Zsh is already installed
   stat:
-    path: "{{ ansible_env.XDG_DATA_HOME }}/oh-my-zsh"
+    path: "{{ ansible_env.HOME }}/.local/share/oh-my-zsh"
   register: oh_my_zsh
   tags: *zsh
 
@@ -33,19 +32,19 @@
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
     # Moving oh-my-zsh folder
-    mv "{{ ansible_env.HOME }}/.oh-my-zsh" "{{ ansible_env.XDG_DATA_HOME }}/oh-my-zsh"
-    sed "s/\$HOME\/\./\$XDG_DATA_HOME\//" -i "{{ ansible_env.HOME }}/.zshrc"
+    mv "{{ ansible_env.HOME }}/.oh-my-zsh" "{{ ansible_env.HOME }}/.local/share/oh-my-zsh"
 
     # Changing default oh-my-zsh theme
     sed "s/robbyrussell/gnzh/" -i "{{ ansible_env.HOME }}/.zshrc"
-    
+
     # Insert ENV at line 6
     sed -i "5i export XDG_CACHE_HOME=$HOME/.cache" "{{ ansible_env.HOME }}/.zshrc"
-    sed -i "5i export XDG_CONFIG_HOME=$HOME/.config" "{{ ansible_env.HOME }}/.zshrc"
-    sed -i "5i export XDG_DATA_HOME=$HOME/.local/share" "{{ ansible_env.HOME }}/.zshrc"
-    sed -i "5i export XDG_STATE_HOME=$HOME/.local/state" "{{ ansible_env.HOME }}/.zshrc"
-    sed -i "5i export DOTFILES=$HOME/.dotfiles" "{{ ansible_env.HOME }}/.zshrc"
-    sed -i "5i export HISTFILE=$XDG_STATE_HOME/zsh/history" "{{ ansible_env.HOME }}/.zshrc"
+    sed -i "6i export XDG_CONFIG_HOME=$HOME/.config" "{{ ansible_env.HOME }}/.zshrc"
+    sed -i "7i export XDG_DATA_HOME=$HOME/.local/share" "{{ ansible_env.HOME }}/.zshrc"
+    sed -i "8i export XDG_STATE_HOME=$HOME/.local/state" "{{ ansible_env.HOME }}/.zshrc"
+    sed -i "9i export DOTFILES=$HOME/.dotfiles" "{{ ansible_env.HOME }}/.zshrc"
+    sed -i "10i export HISTFILE=$XDG_STATE_HOME/zsh/history" "{{ ansible_env.HOME }}/.zshrc"
+    sed -i "11i export PNPM_HOME=$XDG_DATA_HOME/pnpm" "{{ ansible_env.HOME }}/.zshrc"
   tags: *zsh
   when: oh_my_zsh.stat.isdir is not defined
 
@@ -55,7 +54,7 @@
   ansible.builtin.git:
     repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
     dest: "{{ ansible_env.XDG_DATA_HOME }}/oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
-  tags: zshh
+  tags: *zsh
   when: oh_my_zsh.stat.isdir is not defined
 
 - name: Check if Z-Shell config exists
@@ -71,5 +70,4 @@
     rm "{{ ansible_env.HOME }}/.zshrc"
     mv "{{ ansible_env.HOME }}/.zshrc.pre-oh-my-zsh" "{{ ansible_env.HOME }}/.zshrc"
   tags: *zsh
-  when: zsh_rc.stat.exists == True
-...
+  when: zsh_rc.stat.exists

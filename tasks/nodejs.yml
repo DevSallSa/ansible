@@ -2,7 +2,6 @@
   ansible.builtin.git:
     repo: 'https://github.com/nvm-sh/nvm.git'
     dest: "{{ ansible_env.XDG_CONFIG_HOME }}/nvm"
-    force: yes
   tags: &nodejs [ "install", "nodejs"]
 
 - name: Install Node Version Manager (nvm)
@@ -24,7 +23,7 @@
 
     echo '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"' >> \
                                 "{{ ansible_env.HOME }}/.zshrc"
-  tags: nodejss
+  tags: *nodejs
 
 - name: Install latest Node.js LTS
   become: yes
