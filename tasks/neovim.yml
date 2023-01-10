@@ -29,6 +29,12 @@
   tags: *nvim
   when: not nvim.stat.exists
 
+- name: Install neovim python module
+  pip:
+    name: pynvim
+  tags: *nvim
+  when: not nvim.stat.exists
+
 - name: Get packer plugin manager
   ansible.builtin.git:
     repo: 'https://github.com/wbthomason/packer.nvim'

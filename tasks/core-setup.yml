@@ -10,7 +10,6 @@
       - gnupg
       - libnotify-bin
       - lsb-release
-      - python3-pip
       - ssh
       - tree
       - wget
@@ -29,7 +28,8 @@
       - jq
       - make
       - neofetch
-      - python3-venv
+      - python3-pip
+      - python3-venv # will change depending on python version
       - ripgrep
       - shellcheck
       - sqlite3
@@ -41,7 +41,7 @@
       - xclip
       - zip
   when: ansible_distribution in ["Pop!_OS", "Ubuntu", "Debian"]
-  tags: cores
+  tags: *core
 
 - name: Setting up new bin folders
   become: yes
