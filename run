@@ -5,7 +5,7 @@
 # Author       : DevSallSa
 # Email        : devsallsa@linuxmail.org
 # Date         : 2022-12-24
-# Version      : 1.0.1
+# Version      : 1.0.0
 ###################################################################
 
 sudo apt-get update -y
@@ -16,11 +16,5 @@ sudo apt install -y ansible
 export XDG_CONFIG_HOME="$HOME"/.config
 export XDG_DATA_HOME="$HOME"/.local/share
 
-## pull ansible
-#ansible-playbook -K --vault-pass-file "$HOME"/.vault-key \
-#	--skip-tags=ssh,authorized-ssh-keys local.yml
-#
-#ansible-pull -K --vault-pass-file "$HOME"/.vault-key \
-#	--skip-tags=ssh,authorized-ssh-keys -U https://github.com/DevSallSa/ansible.git
-
-echo "RELOAD YOUR SYSTEM TO BE OK !!"
+ansible-playbook -K --vault-pass-file "$HOME"/.vault-key \
+	--skip-tags=authorized-ssh-keys local.yml

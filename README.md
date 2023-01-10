@@ -34,7 +34,7 @@ $ ./run --skip-tags=ssh,authorized-ssh-keys
 
 - Essential:
 
-  - [ ] Make runner script
+  - [x] Make runner script
   - [x] Create productivity tasks
   - [x] Install personal dotfiles
   - [x] Refactor: use `import_tasks` only instead of `include_tasks`
