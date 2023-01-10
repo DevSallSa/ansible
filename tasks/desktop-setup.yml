@@ -1,13 +1,13 @@
 ---
 - name: Install Gnome tweaks tool
-  become: yes
+  become: true
   apt:
     name: gnome-tweaks
   tags: &desktop ["desktop"]
-  when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
+  when: ansible_env.DESKTOP_SESSION == 'pop'
 
 - name: Copy wallpaper files
-  become: yes
+  become: true
   copy:
     src: "{{ item }}"
     dest: /usr/share/backgrounds/
@@ -21,42 +21,42 @@
 # Use dconf-cli for dumping dconf value
 # or just check dconf-editor
 - name: Set wallpaper for Pop-COSMIC
-  become: yes
+  become: true
   become_user: "{{ ansible_env.USER }}"
   dconf:
     key: "/org/gnome/desktop/background/picture-uri"
     value: "'file:///usr/share/backgrounds/light-paper.jpg'"
   tags: *desktop
-  when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
+  when: ansible_env.DESKTOP_SESSION == 'pop'
 
 - name: Set wallpaper for Pop-COSMIC dark mode
-  become: yes
+  become: true
   become_user: "{{ ansible_env.USER }}"
   dconf:
     key: "/org/gnome/desktop/background/picture-uri-dark"
     value: "'file:///usr/share/backgrounds/dark-paper.jpg'"
   tags: *desktop
-  when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
+  when: ansible_env.DESKTOP_SESSION == 'pop'
 
 - name: Set wallpaper position
-  become: yes
+  become: true
   become_user: "{{ ansible_env.USER }}"
   dconf:
     key: "/org/gnome/desktop/background/picture-options"
     value: "'zoom'"
   tags: *desktop
-  when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
+  when: ansible_env.DESKTOP_SESSION == 'pop'
 
 - name: Set Kitty terminal as default
-  become: yes
+  become: true
   community.general.alternatives:
     name: x-terminal-emulator
     link: /usr/bin/x-terminal-emulator
-    path: "{{ lookup('env', 'HOME') }}/.local/bin/kitty"
+    path: "{{ ansible_env.HOME }}/.local/bin/kitty"
     state: selected
   tags: *desktop
   when:
-    "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
+    ansible_env.DESKTOP_SESSION == 'pop'
 
     ###########################
     # Gnome custom keybinding #
@@ -67,25 +67,26 @@
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/name"
     value: "'Launch brave browser'"
   tags: *desktop
-  when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
+  when: ansible_env.DESKTOP_SESSION == 'pop'"
 
 - name: Set command for brave browser shortcut
   dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/command"
     value: "'brave-browser-stable'"
   tags: *desktop
-  when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
+  when: ansible_env.DESKTOP_SESSION == 'pop'"
 
 - name: Bind key for brave browser
   dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/binding"
     value: "'<Super><Shift>b'"
   tags: *desktop
-  when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
+  when: ansible_env.DESKTOP_SESSION == 'pop'
 
 - name: Enable custom keybindings
   dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings"
     value: "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
   tags: *desktop
-  when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
+  when: ansible_env.DESKTOP_SESSION == 'pop'
+...

@@ -2,7 +2,7 @@
 # Microsoft fonts are proprietary
 # we can't use them for commercial use
 - name: Install microsoft proprietary fonts
-  become: yes
+  become: true
   apt:
     name: ttf-mscorefonts-installer
   tags: &font ["install", "fonts"]

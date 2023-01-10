@@ -1,9 +1,10 @@
+---
 - name: "(Git) set username"
   community.general.git_config:
     name: user.name
     scope: global
     value: "{{ git_config_user_name }}"
-  tags: 
+  tags:
     - git
     - git-personal
 
@@ -12,7 +13,7 @@
     name: user.email
     scope: global
     value: "{{ git_config_user_email }}"
-  tags: 
+  tags:
     - git
     - git-personal
 
@@ -52,17 +53,21 @@
   tags: git
 
 - stat:
-    path: "{{ lookup('env','HOME') }}/.gitconfig"
+    path: "{{ ansible_env.HOME }}/.gitconfig"
   register: gitconfig
-  tags: 
+  tags:
     - git
     - git-personal
 
 - name: "(Git) finish config"
+  args:
+    executable: /usr/bin/zsh
   shell: |
-    mkdir -p "{{ lookup('env','XDG_CONFIG_HOME')}}/git"
-    mv "{{ lookup('env','HOME') }}/.gitconfig" "{{ lookup('env','XDG_CONFIG_HOME') }}/git/config"
-  tags: 
+    mkdir -p "{{ ansible_env.XDG_CONFIG_HOME}}/git"
+    mv "{{ ansible_env.HOME }}/.gitconfig"\
+       "{{ ansible_env.XDG_CONFIG_HOME }}/git/config"
+  tags:
     - git
     - git-personal
   when: gitconfig.stat.exists
+...

@@ -2,16 +2,14 @@
 - name: Install ansible requirements
   become: true
   apt:
-    name: 
+    name:
       - python3-psutil
   when: ansible_distribution in ["Pop!_OS", "Ubuntu", "Debian"]
-  tags:
-    - ansible
+  tags: ansible
 
-- name: Install Ansible Galaxy
+- name: (ansible) Install Ansible Galaxy
   shell: ansible-galaxy collection install -r requirements.yml --upgrade
-  tags:
-    - ansible
+  tags: ansible
 
 - name: Create ansible temp directory
   file:

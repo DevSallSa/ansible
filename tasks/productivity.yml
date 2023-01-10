@@ -6,38 +6,38 @@
   tags: &prod ["install", "productivity"]
 
 - name: Install peek for screen recording
-  become: yes
+  become: true
   apt:
     name: peek
   when: ansible_distribution in ["Pop!_OS", "Ubuntu", "Debian"]
   tags: *prod
 
 - name: Install cheese for webcam
-  become: yes
+  become: true
   apt:
     name: cheese
   when: ansible_distribution in ["Pop!_OS", "Ubuntu", "Debian"]
   tags: *prod
 
 - name: Install gnome-pomodoro
-  become: yes
+  become: true
   apt:
     name: gnome-shell-pomodoro
-  when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
+  when: ansible_env.DESKTOP_SESSION == 'pop'
   tags: *prod
 
 - name: Remove old gnome-calendar
-  become: yes
+  become: true
   apt:
     name: gnome-calendar
     state: absent
-  when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
-  tags: 
+  when: ansible_env.DESKTOP_SESSION == 'pop'
+  tags:
     - *prod
     - flatpak
 
 - name: Install flatpak
-  become: yes
+  become: true
   apt:
     name: flatpak
   when: ansible_distribution in ["Pop!_OS", "Ubuntu", "Debian"]
@@ -195,4 +195,4 @@
   tags:
     - *prod
     - flatpak
-...      
+...

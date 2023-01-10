@@ -1,6 +1,6 @@
 ---
 - name: Install core packages
-  become: yes
+  become: true
   apt:
     name:
       - aptitude
@@ -14,10 +14,9 @@
       - tree
       - wget
   when: ansible_distribution in ["Pop!_OS", "Ubuntu", "Debian"]
-  tags: &core ["install", "core"]
-
+  tags: &core ['install', "core"]
 - name: Install productivity packages
-  become: yes
+  become: true
   apt:
     name:
       - bat
@@ -29,7 +28,7 @@
       - make
       - neofetch
       - python3-pip
-      - python3-venv # will change depending on python version
+      - python3-venv
       - ripgrep
       - shellcheck
       - sqlite3
@@ -42,8 +41,8 @@
       - zip
   when: ansible_distribution in ["Pop!_OS", "Ubuntu", "Debian"]
   tags: *core
-
 - name: Setting up new bin folders
-  become: yes
+  become: true
   shell: mkdir -p /opt/bin
   tags: *core
+...

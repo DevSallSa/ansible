@@ -6,9 +6,11 @@
   tags: &sdkman ["install", "sdkman"]
 
 - name: Install SDKMAN!
+  args:
+    executable: /usr/bin/zsh
   shell: |
     chmod +x "{{ ansible_tmp_path }}/sdkman.sh"
     export SDKMAN_DIR="{{ ansible_env.XDG_DATA_HOME }}/sdkman"
     "{{ ansible_tmp_path }}/sdkman.sh"
   tags: *sdkman
-...    
+...

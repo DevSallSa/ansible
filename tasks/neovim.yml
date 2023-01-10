@@ -16,7 +16,7 @@
     executable: /usr/bin/bash
   shell: |
     curl -L https://github.com/neovim/neovim/releases/download/stable/nvim.appimage \
-        -o "{{ neovim_file }}"
+         -o "{{ neovim_file }}"
     chmod +x "{{ neovim_file }}"
   tags: *nvim
   when: not nvim.stat.exists
@@ -44,7 +44,7 @@
 
 - name: Installing neovim plugin
   args:
-    executable: /usr/bin/bash
+    executable: /usr/bin/zsh
   shell: |
     nvim --headless -c 'autocmd User PackerComplete quitall' \
                     -c 'PackerSync'

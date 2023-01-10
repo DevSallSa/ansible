@@ -34,14 +34,14 @@ $ ./run --skip-tags=ssh,authorized-ssh-keys
 
 - Essential:
 
-  - [x] Make runner script
+  - [ ] Make runner script
   - [x] Create productivity tasks
   - [ ] Install personal dotfiles
-  - [ ] Refactor: use `import_tasks` only instead of `include_tasks`
+  - [x] Refactor: use `import_tasks` only instead of `include_tasks`
   - [ ] Refactor: standardize output
-  - [ ] Refactor: gather tasks by tags
-  - [ ] Refactor: use `ansible_env` instead of `lookup`
-  - [ ] Refactor: format yml
+  - [x] Refactor: gather tasks by tags
+  - [x] Refactor: use `ansible_env` instead of `lookup`
+  - [x] Refactor: format yml
   - [ ] Delete temporary processing folder
   - [x] Ask user to reboot system
   - [ ] Make this repo public

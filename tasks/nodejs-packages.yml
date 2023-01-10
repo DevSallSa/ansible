@@ -1,5 +1,6 @@
+---
 - name: (npm) Install Yarn
-  become: yes
+  become: true
   become_user: "{{ ansible_env.USER }}"
   args:
     executable: /usr/bin/zsh
@@ -10,7 +11,7 @@
   tags: &npm ["install", "nodejs", "npm"]
 
 - name: (npm) Install PNPM
-  become: yes
+  become: true
   become_user: "{{ ansible_env.USER }}"
   args:
     executable: /usr/bin/zsh
@@ -22,7 +23,7 @@
   tags: *npm
 
 - name: (pnpm) Install Typescript
-  become: yes
+  become: true
   become_user: "{{ ansible_env.USER }}"
   args:
     executable: /usr/bin/zsh
@@ -33,7 +34,7 @@
   tags: *npm
 
 - name: (pnpm) Install Create-React-App
-  become: yes
+  become: true
   become_user: "{{ ansible_env.USER }}"
   args:
     executable: /usr/bin/zsh
@@ -44,7 +45,7 @@
   tags: *npm
 
 - name: (pnpm) Install Angular CLI
-  become: yes
+  become: true
   become_user: "{{ ansible_env.USER }}"
   args:
     executable: /usr/bin/zsh
@@ -53,3 +54,4 @@
     nvm use node;
     pnpm install -g @angular/cli
   tags: *npm
+...

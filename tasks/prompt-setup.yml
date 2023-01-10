@@ -8,6 +8,8 @@
   tags: prompt
 
 - name: Setup Starship prompt
-  shell: echo 'eval "$(starship init zsh)"' >> "{{ lookup('env', 'HOME') }}/.zshrc"
+  shell: |
+    echo 'eval "$(starship init zsh)"' >> \
+               "{{ lookup('env', 'HOME') }}/.zshrc"
   tags: prompt
 ...

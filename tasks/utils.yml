@@ -19,7 +19,7 @@
     state: present
     method: user
   tags: *utils
-  when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
+  when: ansible_env.DESKTOP_SESSION == 'pop'
 
 - name: (Flatpak) Install Gradience
   community.general.flatpak:
@@ -27,7 +27,7 @@
     state: present
     method: user
   tags: *utils
-  when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
+  when: ansible_env.DESKTOP_SESSION == 'pop'
 
 - name: (Flatpak) Install Gnome extension manager
   community.general.flatpak:
@@ -35,5 +35,5 @@
     state: present
     method: user
   tags: *utils
-  when: "lookup('env', 'DESKTOP_SESSION') is eq 'pop'"
+  when: ansible_env.DESKTOP_SESSION == 'pop'
 ...

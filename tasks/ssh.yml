@@ -1,9 +1,10 @@
+---
 - name: Create .ssh directory
   file:
     dest: "{{ ssh_dest_path }}"
     mode: 0700
     state: directory
-  tags: &ssh ['dotfiles', 'ssh']
+  tags: &ssh ["ssh"]
 
 - name: Install ssh keys
   copy:
@@ -12,8 +13,10 @@
     mode: 0600
   tags: *ssh
 
-- name: To create ssh keys, execute the command in /tmp/new-ssh.log
-  shell: echo 'ssh-keygen -a 100 -t ed25519 -C "<your-identifier>"' > /tmp/new-ssh.log
+- name: To create ssh keys, execute the command in /tmp/ansible/new-ssh.log
+  shell: |
+    echo 'ssh-keygen -a 100 -t ed25519 -C "<your-identifier>"' > \
+                "{{ ansible_tmp_path }}/new-ssh.log"
   tags: new-ssh
 
 - name: Set authorized key from file
@@ -23,4 +26,5 @@
     key: "{{ lookup('file', item) }}"
   tags: authorized-ssh-keys
   with_fileglob:
-  - "{{ lookup('env', 'HOME') }}/.ssh/*.pub"
+    - "{{ lookup('env', 'HOME') }}/.ssh/*.pub"
+...

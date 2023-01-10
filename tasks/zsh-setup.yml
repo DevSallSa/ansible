@@ -1,6 +1,6 @@
 ---
 - name: Install Z-shell
-  become: yes
+  become: true
   apt:
     name:
       - zsh
@@ -13,7 +13,7 @@
   tags: *zsh
 
 - name: Set Z-Shell as default
-  become: yes
+  become: true
   user:
     name: "{{ ansible_user_id }}"
     shell: /usr/bin/zsh
@@ -26,7 +26,7 @@
   tags: *zsh
 
 - name: Install Oh-My-Zsh
-  become: yes
+  become: true
   become_user: "{{ ansible_env.USER }}"
   shell: |
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
@@ -49,11 +49,11 @@
   when: oh_my_zsh.stat.isdir is not defined
 
 - name: Install Zsh-syntax-highlighting
-  become: yes
+  become: true
   become_user: "{{ ansible_env.USER }}"
   ansible.builtin.git:
     repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
-    dest: "{{ ansible_env.XDG_DATA_HOME }}/oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
+    dest: "{{ ansible_env.HOME }}/.local/share/oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
   tags: *zsh
   when: oh_my_zsh.stat.isdir is not defined
 
@@ -64,10 +64,11 @@
   tags: *zsh
 
 - name: Apply existing Z-Shell config
-  become: yes
+  become: true
   become_user: "{{ ansible_env.USER }}"
   shell: |
     rm "{{ ansible_env.HOME }}/.zshrc"
     mv "{{ ansible_env.HOME }}/.zshrc.pre-oh-my-zsh" "{{ ansible_env.HOME }}/.zshrc"
   tags: *zsh
   when: zsh_rc.stat.exists
+...

@@ -21,6 +21,8 @@
     ssh_src_path: "./.ssh/"
     ssh_dest_path: "{{ ansible_env.HOME }}/.ssh/"
     ansible_tmp_path: "/tmp/ansible"
+    fonts_path: "{{ ansible_env.HOME }}/.local/share/fonts"
+    neovim_file: "{{ ansible_env.HOME }}/Apps/nvim.appimage"
 
   # Tasks to perform first
   # tasks to complete before running roles
@@ -34,7 +36,7 @@
         - install
         - core
       pacman: update_cache=yes
-      changed_when: False
+      changed_when: false
       when: ansible_distribution == "Archlinux"
 
     # update cache for Debian and derivatives....
@@ -46,76 +48,29 @@
         - install
         - core
       apt: update_cache=yes
-      changed_when: False
+      changed_when: false
       when: ansible_distribution in ["Pop!_OS", "Ubuntu", "Debian"]
 
   tasks:
-    - name: "include_tasks => ansible setup"
-      include_tasks: tasks/ansible.yml
-      tags: ansible
-
-    - name: "include_tasks => core setup"
-      import_tasks: tasks/core-setup.yml
-
-    - name: "import_tasks => ssh"
-      import_tasks: tasks/ssh.yml
-
-    - name: "include_tasks => zsh"
-      import_tasks: tasks/zsh-setup.yml
-
-    - name: "include_tasks => prompt setup"
-      include_tasks: tasks/prompt-setup.yml
-      tags: prompt
-
-    - name: "include_tasks => kitty terminal"
-      include_tasks: tasks/kitty.yml
-      tags: kitty
-
-    - name: "import_tasks => fonts"
-      import_tasks: tasks/fonts-setup.yml
-      vars:
-        fonts_path: "{{ ansible_env.HOME }}/.local/share/fonts"
-
-    - name: "import_tasks => git"
-      import_tasks: tasks/git.yml
-
-    - name: "import_tasks => neovim"
-      import_tasks: tasks/neovim.yml
-      vars:
-        neovim_file: "{{ ansible_env.HOME }}/Apps/nvim.appimage"
-
-    - name: "import_tasks => nodejs"
-      import_tasks: tasks/nodejs.yml
-
-    - name: "import_tasks => node packages"
-      import_tasks: tasks/nodejs-packages.yml
-
-    - name: "import_tasks => sdkman!"
-      import_tasks: tasks/sdkman.yml
-
-    - name: "include_tasks => brave"
-      include_tasks: tasks/brave.yml
-      tags:
-        - install
-        - brave
-
-    - name: "import_tasks => productivity"
-      import_tasks: tasks/productivity.yml
-
-    - name: "import_tasks => utilities"
-      import_tasks: tasks/utils.yml
-
-    - name: "import_tasks => entertainment"
-      import_tasks: tasks/entertainment.yml
-
-    - name: "include_tasks => dotfiles"
-      import_tasks: tasks/dotfiles-setup.yml
-
-    - name: "include_tasks => desktop"
-      import_tasks: tasks/desktop-setup.yml
-
-    - name: "import_tasks => docker"
-      import_tasks: tasks/docker-setup.yml
+    - import_tasks: tasks/ansible.yml
+    - import_tasks: tasks/core-setup.yml
+    - import_tasks: tasks/ssh.yml
+    - import_tasks: tasks/zsh-setup.yml
+    - import_tasks: tasks/prompt-setup.yml
+    - import_tasks: tasks/kitty.yml
+    - import_tasks: tasks/fonts-setup.yml
+    - import_tasks: tasks/git.yml
+    - import_tasks: tasks/neovim.yml
+    - import_tasks: tasks/nodejs.yml
+    - import_tasks: tasks/nodejs-packages.yml
+    - import_tasks: tasks/sdkman.yml
+    - import_tasks: tasks/brave.yml
+    - import_tasks: tasks/productivity.yml
+    - import_tasks: tasks/utils.yml
+    - import_tasks: tasks/entertainment.yml
+    - import_tasks: tasks/dotfiles-setup.yml
+    - import_tasks: tasks/desktop-setup.yml
+    - import_tasks: tasks/docker-setup.yml
 
     - name: "Configuration complete. Notifying user..."
       shell: |
@@ -126,3 +81,4 @@
       tags: always
       with_items:
         - files/Ansible_logo.svg
+...

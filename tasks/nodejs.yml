@@ -1,11 +1,15 @@
+---
 - name: Get Node Version Manager (nvm)
   ansible.builtin.git:
     repo: 'https://github.com/nvm-sh/nvm.git'
-    dest: "{{ ansible_env.XDG_CONFIG_HOME }}/nvm"
-  tags: &nodejs [ "install", "nodejs"]
+    dest: "{{ ansible_env.HOME }}/.config/nvm"
+  tags: &nodejs ["install", "nodejs"]
 
 - name: Install Node Version Manager (nvm)
-  become: yes
+  become: true
+  become_user: "{{ ansible_env.USER }}"
+  args:
+    executable: /usr/bin/zsh
   shell: |
     cd "{{ ansible_env.XDG_CONFIG_HOME }}/nvm" && \
     git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" \
@@ -26,7 +30,7 @@
   tags: *nodejs
 
 - name: Install latest Node.js LTS
-  become: yes
+  become: true
   become_user: "{{ ansible_env.USER }}"
   args:
     executable: /usr/bin/zsh
@@ -34,3 +38,4 @@
     source "{{ ansible_env.HOME }}/.zshrc"
     nvm install --lts
   tags: *nodejs
+...

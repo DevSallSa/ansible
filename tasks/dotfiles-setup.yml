@@ -5,12 +5,13 @@
     executable: /usr/bin/bash
   shell: |
     old_configs=(Chiaki alacritty cabal firejail gdb kitty logid npm nvim \
-                  python tmux touchegg yarn zsh .clang-format aliases \ 
+                  python tmux touchegg yarn zsh .clang-format aliases \
                   shellcheckrc starship.toml)
     mkdir -p /tmp/old-configs/config
     for config in "${old_configs[@]}"
     do
-      cp -r "{{ ansible_env.HOME }}/.config/$config" /tmp/old-configs/config 2> /dev/null
+      cp -r "{{ ansible_env.HOME }}/.config/$config"\
+            /tmp/old-configs/config 2> /dev/null
     done
 
     old_files=( "{{ item }}" )
