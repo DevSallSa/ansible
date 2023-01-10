@@ -8,6 +8,7 @@
       - ca-certificates
       - curl
       - gnupg
+      - libnotify-bin
       - lsb-release
       - python3-pip
       - ssh
@@ -46,4 +47,3 @@
   become: yes
   shell: mkdir -p /opt/bin
   tags: *core
-...
