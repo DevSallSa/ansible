@@ -36,9 +36,9 @@ $ ./run --skip-tags=ssh,authorized-ssh-keys
 
   - [ ] Make runner script
   - [x] Create productivity tasks
-  - [ ] Install personal dotfiles
+  - [x] Install personal dotfiles
   - [x] Refactor: use `import_tasks` only instead of `include_tasks`
-  - [ ] Refactor: standardize output
+  - [x] Refactor: standardize output
   - [x] Refactor: gather tasks by tags
   - [x] Refactor: use `ansible_env` instead of `lookup`
   - [x] Refactor: format yml

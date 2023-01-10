@@ -1,7 +1,7 @@
 ---
 - name: Download dotfiles
   ansible.builtin.git:
-    repo: git@github.com:DevSallSa/.dotfiles.git
+    repo: https://github.com/DevSallSa/.dotfiles.git
     dest: "{{ ansible_env.HOME }}/.dotfiles"
   tags: dotfiles
 
