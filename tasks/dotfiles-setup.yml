@@ -10,12 +10,12 @@
     repo: https://github.com/DevSallSa/.dotfiles.git
     dest: "{{ ansible_env.HOME }}/.dotfiles"
   tags: *dotfiles
-  when: dotfiles.stat.isdir is not defined and not dotfiles.stat.isdir
+  when: dotfiles.stat.isdir is not defined
 
 - name: Installing dotfiles
   args:
     executable: /usr/bin/bash
   shell: "{{ ansible_env.HOME }}/.dotfiles/install.sh"
   tags: *dotfiles
-  when: dotfiles.stat.isdir is not defined and not dotfiles.stat.isdir
+  when: dotfiles.stat.isdir is not defined
 ...

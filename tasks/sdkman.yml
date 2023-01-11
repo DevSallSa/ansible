@@ -10,7 +10,7 @@
     url: "https://get.sdkman.io"
     dest: "{{ ansible_tmp_path }}/sdkman.sh"
   tags: *sdkman
-  when: sdkman.stat.isdir is not defined and not sdkman.stat.isdir
+  when: sdkman.stat.isdir is not defined
 
 - name: Install SDKMAN!
   args:
@@ -20,5 +20,5 @@
     export SDKMAN_DIR="{{ ansible_env.HOME }}/.local/share/sdkman"
     "{{ ansible_tmp_path }}/sdkman.sh"
   tags: *sdkman
-  when: sdkman.stat.isdir is not defined and not sdkman.stat.isdir
+  when: sdkman.stat.isdir is not defined
 ...

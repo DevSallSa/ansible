@@ -20,16 +20,16 @@
     curl -fsSL https://github.com/ryanoasis/nerd-fonts/releases/download/v2.3.0-RC/JetBrainsMono.zip \
                 -o "{{ ansible_tmp_path }}/JetBrainsMono.zip"
   tags: *font
-  when: nerdfonts.stat.isdir is defined and nerdfonts.stat.isdir
+  when: nerdfonts.stat.isdir is not defined
 
 - name: Install JetBrains, VictorMono nerd-fonts
   shell: |
-    mkdir -p "{{ fonts_path }}"
+    mkdir -p "{{ fonts_path }}/NerdFonts"
     unzip -uo "{{ ansible_tmp_path }}/VictorMono.zip" \
                 -d "{{ fonts_path }}/NerdFonts/VictorMono"
     unzip -uo "{{ ansible_tmp_path }}/JetBrainsMono.zip" \
                 -d "{{ fonts_path }}/NerdFonts/JetBrainsMono"
     fc-cache -fv "{{ fonts_path }}"
   tags: *font
-  when: nerdfonts.stat.isdir is defined and nerdfonts.stat.isdir
+  when: nerdfonts.stat.isdir is not defined
 ...
