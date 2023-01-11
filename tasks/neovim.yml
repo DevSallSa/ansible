@@ -42,12 +42,12 @@
     depth: 1
   tags: *nvim
 
-- name: Installing neovim plugin
-  args:
-    executable: /usr/bin/zsh
-  shell: |
-    nvim --headless -c 'autocmd User PackerComplete quitall' \
-                    -c 'PackerSync'
-  tags: *nvim
-  when: not nvim.stat.exists
+    # - name: Installing neovim plugin
+    #   args:
+    #     executable: /usr/bin/zsh
+    #   shell: |
+    #     "{{ neovim_file }}" --headless -c 'autocmd User PackerComplete quitall' \
+    #                     -c 'PackerSync'
+    #   tags: *nvim
+    #   when: not nvim.stat.exists
 ...
