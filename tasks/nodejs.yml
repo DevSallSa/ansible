@@ -3,6 +3,7 @@
   ansible.builtin.git:
     repo: 'https://github.com/nvm-sh/nvm.git'
     dest: "{{ ansible_env.HOME }}/.config/nvm"
+    force: true
   tags: &nodejs ["install", "nodejs"]
 
 - name: Install Node Version Manager (nvm)

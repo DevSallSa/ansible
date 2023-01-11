@@ -1,13 +1,21 @@
 ---
+- name: Check if dotfiles are already installed
+  stat:
+    path: "{{ ansible_env.HOME }}/.dotfiles"
+  register: dotfiles
+  tags: &dotfiles ["install", "dotfiles"]
+
 - name: Download dotfiles
   ansible.builtin.git:
     repo: https://github.com/DevSallSa/.dotfiles.git
     dest: "{{ ansible_env.HOME }}/.dotfiles"
-  tags: dotfiles
+  tags: *dotfiles
+  when: dotfiles.stat.isdir is not defined and not dotfiles.stat.isdir
 
 - name: Installing dotfiles
   args:
     executable: /usr/bin/bash
   shell: "{{ ansible_env.HOME }}/.dotfiles/install.sh"
-  tags: dotfiles
+  tags: *dotfiles
+  when: dotfiles.stat.isdir is not defined and not dotfiles.stat.isdir
 ...

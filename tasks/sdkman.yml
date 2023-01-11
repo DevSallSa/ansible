@@ -1,16 +1,24 @@
 ---
+- name: Check if SDKMAN is already installed
+  stat:
+    path: "{{ ansible_env.HOME }}/.local/share/sdkman"
+  register: sdkman
+  tags: &sdkman ["install", "sdkman"]
+
 - name: Download SDKMAN!
   get_url:
     url: "https://get.sdkman.io"
     dest: "{{ ansible_tmp_path }}/sdkman.sh"
-  tags: &sdkman ["install", "sdkman"]
+  tags: *sdkman
+  when: sdkman.stat.isdir is not defined and not sdkman.stat.isdir
 
 - name: Install SDKMAN!
   args:
     executable: /usr/bin/zsh
   shell: |
     chmod +x "{{ ansible_tmp_path }}/sdkman.sh"
-    export SDKMAN_DIR="{{ ansible_env.XDG_DATA_HOME }}/sdkman"
+    export SDKMAN_DIR="{{ ansible_env.HOME }}/.local/share/sdkman"
     "{{ ansible_tmp_path }}/sdkman.sh"
   tags: *sdkman
+  when: sdkman.stat.isdir is not defined and not sdkman.stat.isdir
 ...

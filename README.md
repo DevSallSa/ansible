@@ -42,9 +42,9 @@ $ ./run --skip-tags=ssh,authorized-ssh-keys
   - [x] Refactor: gather tasks by tags
   - [x] Refactor: use `ansible_env` instead of `lookup`
   - [x] Refactor: format yml
-  - [ ] Delete temporary processing folder
+  - [x] Delete temporary processing folder
   - [x] Ask user to reboot system
-  - [ ] Make this repo public
+  - [x] Make this repo public
   - [ ] Make final test on a real hardware
 
 - Important:

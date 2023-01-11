@@ -1,15 +1,23 @@
 ---
+- name: Check if starship is already installed
+  stat:
+    path: "{{ ansible_tmp_path }}/install-starship.sh"
+  register: starship
+  tags: &starship ["install", "starship"]
+
 - name: Install Starship prompt
   become: true
   shell: |
-    curl -sS https://starship.rs/install.sh -o /tmp/install-starship.sh
-    chmod +x /tmp/install-starship.sh
-    /tmp/install-starship.sh -y
-  tags: prompt
+    curl -sS https://starship.rs/install.sh -o "{{ ansible_tmp_path }}/install-starship.sh"
+    chmod +x "{{ ansible_tmp_path }}/install-starship.sh"
+    "{{ ansible_tmp_path }}/install-starship.sh" -y
+  tags: *starship
+  when: not starship.stat.exists
 
-- name: Setup Starship prompt
+- name: Setup Starship starship
   shell: |
     echo 'eval "$(starship init zsh)"' >> \
-               "{{ lookup('env', 'HOME') }}/.zshrc"
-  tags: prompt
+               "{{ ansible_env.HOME }}/.zshrc"
+  tags: *starship
+  when: not starship.stat.exists
 ...

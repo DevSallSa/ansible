@@ -55,8 +55,7 @@
     path: "{{ ansible_env.HOME }}/.local/bin/kitty"
     state: selected
   tags: *desktop
-  when:
-    ansible_env.DESKTOP_SESSION == 'pop'
+  when: ansible_env.DESKTOP_SESSION == 'pop'
 
     ###########################
     # Gnome custom keybinding #
@@ -67,14 +66,14 @@
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/name"
     value: "'Launch brave browser'"
   tags: *desktop
-  when: ansible_env.DESKTOP_SESSION == 'pop'"
+  when: ansible_env.DESKTOP_SESSION == 'pop'
 
 - name: Set command for brave browser shortcut
   dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/command"
     value: "'brave-browser-stable'"
   tags: *desktop
-  when: ansible_env.DESKTOP_SESSION == 'pop'"
+  when: ansible_env.DESKTOP_SESSION == 'pop'
 
 - name: Bind key for brave browser
   dconf:
