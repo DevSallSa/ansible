@@ -18,13 +18,4 @@
     echo 'ssh-keygen -a 100 -t ed25519 -C "<your-identifier>"' > \
                 "{{ ansible_tmp_path }}/new-ssh.log"
   tags: new-ssh
-
-- name: Set authorized key from file
-  ansible.posix.authorized_key:
-    user: "{{ lookup('env', 'USER') }}"
-    state: present
-    key: "{{ lookup('file', item) }}"
-  tags: authorized-ssh-keys
-  with_fileglob:
-    - "{{ lookup('env', 'HOME') }}/.ssh/*.pub"
 ...

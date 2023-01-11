@@ -7,7 +7,7 @@ and some holidays sacrificed.
 
 > :warning: This ansible repo is mainly for Ubuntu based system (Ubuntu, Pop_OS!, etc...).
 
-> It's a little Pop_OS! centric but I'll add more distro/OS later
+> For now, It's a little Pop_OS! centric but I'll add more distro/OS later
 
 We avoid to automate specific configuration like:
 
@@ -23,12 +23,14 @@ Well,
 
 ## How to use ?
 
-If you really want to use my configs, then use the following command:
+If you really want to use my configs, then use the run script with the
+following command:
 
 ```bash
-# options are not implemented yet
-$ ./run --skip-tags=ssh,authorized-ssh-keys
+$ ./run --skip-tags=git,ssh
 ```
+
+> You can use all `ansible-playbook` options with the runner
 
 ## Things todo
 
@@ -48,9 +50,10 @@ $ ./run --skip-tags=ssh,authorized-ssh-keys
   - [ ] Make final test on a real hardware
 
 - Important:
-  - [ ] Add option to run script
+  - [x] Add option to run script
   - [ ] Save log files
   - [ ] Make README.md more clear, more precise, more intuitive
 - Wishable:
+  - [ ] Add --help to runner script
   - [ ] Make runner script for removing all the configs
   - [ ] Create branches for different OS (this is veeeeerryyyy optional)

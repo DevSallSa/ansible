@@ -5,7 +5,7 @@
 # Author       : DevSallSa
 # Email        : devsallsa@linuxmail.org
 # Date         : 2022-12-24
-# Version      : 1.0.0
+# Version      : 1.1.0
 ###################################################################
 
 sudo apt-get update -y
@@ -16,5 +16,4 @@ sudo apt install -y ansible
 export XDG_CONFIG_HOME="$HOME"/.config
 export XDG_DATA_HOME="$HOME"/.local/share
 
-ansible-playbook -K --vault-pass-file "$HOME"/.vault-key \
-	--skip-tags=authorized-ssh-keys local.yml
+ansible-playbook "$@" ./local.yml
