@@ -5,9 +5,9 @@ and some holidays sacrificed.
 
 > :warning: Don't try to run my ansible config blindly. It'll prompt an error. See GOAL section
 
-> :warning: This ansible repo is mainly for Ubuntu based system (Ubuntu, Pop_OS!, etc...).
+> :warning: This ansible repo is mainly for Ubuntu based system (Ubuntu, Pop\_OS!, etc...).
 
-> For now, It's a little Pop_OS! centric but I'll add more distro/OS later
+> For now, It's a little Pop\_OS! centric but I'll add more distro/OS later
 
 We avoid to automate specific configuration like:
 
@@ -32,6 +32,8 @@ $ ./run --skip-tags=git,ssh
 
 > You can use all `ansible-playbook` options with the runner
 
+> Logs are in `/tmp/ansible-runner.log`
+
 ## Things todo
 
 - Essential:
@@ -51,7 +53,7 @@ $ ./run --skip-tags=git,ssh
 
 - Important:
   - [x] Add option to run script
-  - [ ] Save log files
+  - [x] Save log files
   - [ ] Make README.md more clear, more precise, more intuitive
 - Wishable:
   - [ ] Add --help to runner script
