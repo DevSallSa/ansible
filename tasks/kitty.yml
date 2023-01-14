@@ -1,17 +1,17 @@
 ---
 - name: Check if Kitty-terminal is already installed
   stat:
-    path: "{{ ansible_env.HOME }}/.local/bin/kitty"
+    path: "{{ ansible_env.HOME }}/.local/kitty.app/bin/kitty"
   register: kitty_term
   tags: &kitty ["install", "kitty"]
 
 - name: Install Kitty terminal
   shell: |
     curl -L https://sw.kovidgoyal.net/kitty/installer.sh \
-         -o /tmp/install-kitty.sh
-    chmod +x /tmp/install-kitty.sh
+         -o "{{ ansible_tmp_path }}/install-kitty.sh"
+    chmod +x "{{ ansible_tmp_path }}/install-kitty.sh"
     mkdir -p "{{ ansible_env.HOME }}/.local/bin"
-    /tmp/install-kitty.sh
+    "{{ ansible_tmp_path }}/install-kitty.sh" launch=n
     ln -s "{{ ansible_env.HOME }}/.local/kitty.app/bin/kitty"\
           "{{ ansible_env.HOME }}/.local/bin/"
   tags: *kitty
