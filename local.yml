@@ -55,11 +55,11 @@
     - import_tasks: tasks/ansible.yml
     - import_tasks: tasks/core-setup.yml
     - import_tasks: tasks/ssh.yml
+    - import_tasks: tasks/git.yml
     - import_tasks: tasks/zsh-setup.yml
     - import_tasks: tasks/prompt-setup.yml
     - import_tasks: tasks/kitty.yml
     - import_tasks: tasks/fonts-setup.yml
-    - import_tasks: tasks/git.yml
     - import_tasks: tasks/neovim.yml
     - import_tasks: tasks/nodejs.yml
     - import_tasks: tasks/nodejs-packages.yml
