@@ -15,6 +15,15 @@
       - wget
   when: ansible_distribution in ["Pop!_OS", "Ubuntu", "Debian"]
   tags: &core ['install', "core"]
+
+- name: Upgrade packages
+  become: true
+  apt:
+    autoremove: yes
+    upgrade: yes
+  when: ansible_distribution in ["Pop!_OS", "Ubuntu", "Debian"]
+  tags: *core
+
 - name: Install productivity packages
   become: true
   apt:
@@ -42,6 +51,7 @@
       - zip
   when: ansible_distribution in ["Pop!_OS", "Ubuntu", "Debian"]
   tags: *core
+
 - name: Setting up new bin folders
   become: true
   shell: mkdir -p /opt/bin
