@@ -1,10 +1,17 @@
 ---
+- name: Check if Node.js is already installed
+  stat:
+    path: "{{ ansible_env.HOME }}/.config/nvm"
+  register: node
+  tags: &nodejs ["install", "nodejs"]
+
 - name: Get Node Version Manager (nvm)
   ansible.builtin.git:
     repo: 'https://github.com/nvm-sh/nvm.git'
     dest: "{{ ansible_env.HOME }}/.config/nvm"
     force: true
-  tags: &nodejs ["install", "nodejs"]
+  tags: *nodejs
+  when: node.stat.isdir is not defined
 
 - name: Install Node Version Manager (nvm)
   become: true
@@ -17,6 +24,7 @@
                           $(git rev-list --tags --max-count=1)` && \
     chmod +x ./nvm.sh && ./nvm.sh
   tags: *nodejs
+  when: node.stat.isdir is not defined
 
 - name: Load nvm in Z-shell
   shell: |
@@ -29,6 +37,7 @@
     echo '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"' >> \
                                 "{{ ansible_env.HOME }}/.zshrc"
   tags: *nodejs
+  when: node.stat.isdir is not defined
 
 - name: Install latest Node.js LTS
   become: true
@@ -39,4 +48,5 @@
     source "{{ ansible_env.HOME }}/.zshrc"
     nvm install --lts
   tags: *nodejs
+  when: node.stat.isdir is not defined
 ...

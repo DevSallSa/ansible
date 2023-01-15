@@ -1,4 +1,16 @@
 ---
+- name: Check if npm packages is already installed
+  stat:
+    path: "{{ ansible_env.HOME }}/.config/nvm"
+  register: npm
+  tags: &npm ["install", "npm"]
+
+- name: Check if pnpm packages is already installed
+  stat:
+    path: "{{ ansible_env.HOME }}/.local/share/pnpm"
+  register: pnpm
+  tags: *npm
+
 - name: (npm) Install Yarn
   become: true
   become_user: "{{ ansible_env.USER }}"
@@ -6,9 +18,10 @@
     executable: /usr/bin/zsh
   shell: |
     source "{{ ansible_env.HOME }}/.zshrc"
-    nvm use node;
+    nvm use pnpm;
     npm install -g yarn
-  tags: &npm ["install", "nodejs", "npm"]
+  tags: *npm
+  when: npm.stat.isdir is not defined
 
 - name: (npm) Install PNPM
   become: true
@@ -17,10 +30,11 @@
     executable: /usr/bin/zsh
   shell: |
     source "{{ ansible_env.HOME }}/.zshrc"
-    nvm use node;
+    nvm use pnpm;
     npm install -g pnpm
     pnpm setup
   tags: *npm
+  when: npm.stat.isdir is not defined
 
 - name: (pnpm) Install Typescript
   become: true
@@ -29,9 +43,10 @@
     executable: /usr/bin/zsh
   shell: |
     source "{{ ansible_env.HOME }}/.zshrc"
-    nvm use node;
+    nvm use pnpm;
     pnpm install -g typescript
   tags: *npm
+  when: pnpm.stat.isdir is not defined
 
 - name: (pnpm) Install Create-React-App
   become: true
@@ -40,9 +55,10 @@
     executable: /usr/bin/zsh
   shell: |
     source "{{ ansible_env.HOME }}/.zshrc"
-    nvm use node;
+    nvm use pnpm;
     pnpm install -g create-react-app
   tags: *npm
+  when: pnpm.stat.isdir is not defined
 
 - name: (pnpm) Install Angular CLI
   become: true
@@ -51,7 +67,8 @@
     executable: /usr/bin/zsh
   shell: |
     source "{{ ansible_env.HOME }}/.zshrc"
-    nvm use node;
+    nvm use pnpm;
     pnpm install -g @angular/cli
   tags: *npm
+  when: pnpm.stat.isdir is not defined
 ...
