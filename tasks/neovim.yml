@@ -1,7 +1,7 @@
 ---
-- name: Create Apps directory
+- name: Create Applications directory
   file:
-    dest: "{{ ansible_env.HOME }}/Apps"
+    dest: "{{ ansible_env.HOME }}/Applications"
     state: directory
   tags: &nvim ['install', 'neovim']
 

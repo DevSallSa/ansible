@@ -22,7 +22,7 @@
     ssh_dest_path: "{{ ansible_env.HOME }}/.ssh/"
     ansible_tmp_path: "/tmp/ansible"
     fonts_path: "{{ ansible_env.HOME }}/.local/share/fonts"
-    neovim_file: "{{ ansible_env.HOME }}/Apps/nvim.appimage"
+    neovim_file: "{{ ansible_env.HOME }}/Applications/nvim.appimage"
 
   # Tasks to perform first
   # tasks to complete before running roles
