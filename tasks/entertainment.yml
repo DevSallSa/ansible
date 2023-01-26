@@ -1,10 +1,17 @@
 ---
-- name: (Flatpak) Install Chiaki
+- name: (Flatpak) Install Discord
   community.general.flatpak:
-    name: re.chiaki.Chiaki
+    name: com.discordapp.Discord
     state: present
     method: user
   tags: &entertain ["install", "flatpak", "entertainment"]
+
+- name: (Flatpak) Install Telegram
+  community.general.flatpak:
+    name: org.telegram.desktop
+    state: present
+    method: user
+  tags: *entertain
 
 - name: (Flatpak) Install Lutris
   community.general.flatpak:
@@ -13,16 +20,9 @@
     method: user
   tags: *entertain
 
-- name: (Flatpak) Install Discord
+- name: (Flatpak) Install Chiaki
   community.general.flatpak:
-    name: com.discordapp.Discord
-    state: present
-    method: user
-  tags: *entertain
-
-- name: (Flatpak) Install Telegram
-  community.general.flatpak:
-    name: org.telegram.desktop
+    name: re.chiaki.Chiaki
     state: present
     method: user
   tags: *entertain
