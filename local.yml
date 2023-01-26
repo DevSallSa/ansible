@@ -27,6 +27,12 @@
   # Tasks to perform first
   # tasks to complete before running roles
   pre_tasks:
+    - name: Ensure ansible temp directory exists
+      file:
+        dest: "{{ ansible_tmp_path }}"
+        state: directory
+      tags: always
+
     # update cache for arch linux
     - name: pre-run | update package cache (arch)
       # use root profile to perform tasks
