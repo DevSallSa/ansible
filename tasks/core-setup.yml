@@ -8,6 +8,7 @@
       - ca-certificates
       - curl
       - gnupg
+      - flatpak
       - libnotify-bin
       - lsb-release
       - ssh
@@ -19,8 +20,8 @@
 - name: Upgrade packages
   become: true
   apt:
-    autoremove: yes
-    upgrade: yes
+    autoremove: true
+    upgrade: true
   when: ansible_distribution in ["Pop!_OS", "Ubuntu", "Debian"]
   tags: *core
 
@@ -52,8 +53,18 @@
   when: ansible_distribution in ["Pop!_OS", "Ubuntu", "Debian"]
   tags: *core
 
-- name: Setting up new bin folders
-  become: true
-  shell: mkdir -p /opt/bin
+- name: Ensure /opt/bin directory exists.
+  file:
+    dest: "/opt/bin"
+    state: directory
+  tags: *core
+
+- name: Set Flathub repository
+  community.general.flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
+    method: user
+  when: ansible_distribution in ["Pop!_OS", "Ubuntu", "Debian"]
   tags: *core
 ...

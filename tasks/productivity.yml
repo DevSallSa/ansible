@@ -1,23 +1,10 @@
 ---
-- name: Ensure /opt/bin directory exists.
-  file:
-    dest: "/opt/bin"
-    state: directory
-  tags: &prod ["install", "productivity"]
-
 - name: Install peek for screen recording
   become: true
   apt:
     name: peek
   when: ansible_distribution in ["Pop!_OS", "Ubuntu", "Debian"]
-  tags: *prod
-
-- name: Install cheese for webcam
-  become: true
-  apt:
-    name: cheese
-  when: ansible_distribution in ["Pop!_OS", "Ubuntu", "Debian"]
-  tags: *prod
+  tags: &prod ["install", "productivity"]
 
 - name: Install gnome-pomodoro
   become: true
@@ -32,25 +19,16 @@
     name: gnome-calendar
     state: absent
   when: ansible_env.DESKTOP_SESSION == 'pop'
+  tags: *prod
+
+- name: (Flatpak) Install Cheese
+  community.general.flatpak:
+    name: org.gnome.Cheese
+    state: present
+    method: user
   tags:
     - *prod
     - flatpak
-
-- name: Install flatpak
-  become: true
-  apt:
-    name: flatpak
-  when: ansible_distribution in ["Pop!_OS", "Ubuntu", "Debian"]
-  tags: *prod
-
-- name: Set Flathub repository
-  community.general.flatpak_remote:
-    name: flathub
-    state: present
-    flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
-    method: user
-  when: ansible_distribution in ["Pop!_OS", "Ubuntu", "Debian"]
-  tags: *prod
 
 - name: (Flatpak) Install Gnome Calendar
   community.general.flatpak:
