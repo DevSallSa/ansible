@@ -5,9 +5,9 @@ and some holidays sacrificed.
 
 > :warning: Don't try to run my ansible config blindly. It'll prompt an error. See GOAL section
 
-> :warning: This ansible repo is mainly for Ubuntu based system (Ubuntu, Pop\_OS!, etc...).
+> :warning: This ansible repo is mainly for Ubuntu based system (Ubuntu, Pop_OS!, etc...).
 
-> For now, It's a little Pop\_OS! centric but I'll add more distro/OS later
+> For now, It's a little Pop_OS! centric but I'll add more distro/OS later
 
 We avoid to automate specific configuration like:
 
@@ -34,6 +34,32 @@ $ ./run --skip-tags=git,ssh
 
 > Logs are in `/tmp/ansible-runner.log`
 
+Available tags are:
+
+- `ansible`: for installing ansible dependencies
+- `brave`: for installing brave browser
+- `core`: for installing core packages (essential for my workflow) like _ssh, git, stow, flatpak, etc..._
+- `desktop`: configure the desktop environment. It works actually with Gnome 42.5
+- `docker`: install Docker Desktop
+- `dotfiles`: download and install my personal [dotfiles](https://github.com/DevSallSa/.dotfiles)
+- `entertainment`: install all entertainment apps
+- `flatpak`: install all flatpak apps that I use regardless of the category
+- `fonts`: install fonts
+- `git`: configure Git. For this you need to adapt the `local.yml` files with your infos
+- `install`: install and configure every applications (flatpak, appimages, deb packages, etc...)
+- `kitty`: install Kitty Terminal
+- `neovim`: install Neovim
+- `nodejs`: install Node.js
+- `npm`: install _npm_ packages that I use the most
+- `productivity`: install all productivity apps
+- `starship`: install starship prompt
+- `sdkman`: install SDKMAN!
+- `ssh`: configure SSH
+- `utils`: install all utility apps
+- `zsh`: install and configure Z-Shell
+
+Some needs to be run as super user.
+
 ## Things todo
 
 - Essential:
@@ -49,13 +75,16 @@ $ ./run --skip-tags=git,ssh
   - [x] Delete temporary processing folder
   - [x] Ask user to reboot system
   - [x] Make this repo public
-  - [ ] Make final test on a real hardware
+  - [x] Make final test on a real hardware
 
 - Important:
+
   - [x] Add option to run script
   - [x] Save log files
   - [ ] Make README.md more clear, more precise, more intuitive
+
 - Wishable:
+  - [ ] create a full CLI tool. I can use [bashly](https://github.com/DannyBen/bashly)
   - [ ] Add --help to runner script
   - [ ] Make runner script for removing all the configs
   - [ ] Create branches for different OS (this is veeeeerryyyy optional)
